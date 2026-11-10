@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/deconnexion', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('produits', AdminProductController::class)->except(['show'])->names('products');
+        Route::resource('produits', AdminProductController::class)->parameters(['produits' => 'product'])->except(['show'])->names('products');
         Route::resource('categories', AdminCategoryController::class)->except(['show', 'destroy'])->names('categories');
         Route::get('/commandes', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::patch('/commandes/{order}', [AdminOrderController::class, 'update'])->name('orders.update');
