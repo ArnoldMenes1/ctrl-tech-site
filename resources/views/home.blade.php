@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title','CTRL-Tech')
+@section('content')
+<section class="hero"><div class="hero-copy"><p class="eyebrow light">TECHNOLOGY. CONTROLLED.</p><h1>La technologie qui fait avancer <em>vos idées.</em></h1><p>Équipements informatiques, électronique et accessoires soigneusement sélectionnés pour vos besoins personnels et professionnels.</p><a class="btn btn-light" href="{{ route('products.index') }}">Explorer le catalogue →</a><div class="hero-note">Votre partenaire technologique à Lubumbashi</div></div><div class="hero-art"><div class="art-device"><div class="device-screen"><span>CTRL</span><b>TECH</b><small>SMARTER EVERY DAY</small></div></div></div></section>
+<section class="section container"><div class="section-heading"><div><p class="eyebrow">PARCOURIR</p><h2>Explorez nos catégories</h2></div></div><div class="category-grid">@forelse($categories as $category)<a class="category-tile" href="{{ route('products.index',['categorie'=>$category->slug]) }}"><h3>{{ $category->name }}</h3></a>@empty<p>Les catégories seront bientôt disponibles.</p>@endforelse</div></section>
+<section class="section section-soft"><div class="container"><div class="section-heading"><h2>Notre sélection</h2></div><div class="product-grid">@forelse($featuredProducts as $product)@include('partials.product-card',['product'=>$product])@empty<div class="empty-state wide"><h3>Notre catalogue se prépare.</h3><p>Les produits seront affichés ici dès que leurs informations auront été confirmées.</p></div>@endforelse</div></div></section>
+@endsection
