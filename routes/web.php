@@ -29,7 +29,7 @@ Route::view('/conditions-generales', 'pages.terms')->name('terms');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/connexion', [AdminAuthController::class, 'show'])->name('login');
-    Route::post('/connexion', [AdminAuthController::class, 'login'])->name('login.submit');
+    Route::post('/connexion', [AdminAuthController::class, 'login'])->middleware('throttle:5,1')->name('login.submit');
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/deconnexion', [AdminAuthController::class, 'logout'])->name('logout');
