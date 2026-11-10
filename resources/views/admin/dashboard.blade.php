@@ -1,0 +1,7 @@
+@extends('admin.layout')
+@section('title','Tableau de bord — CTRL-Tech')
+@section('content')
+<div class="admin-title"><div><p class="eyebrow">ESPACE DE GESTION</p><h1>Vue générale</h1><p>Suivez les principaux indicateurs de votre boutique.</p></div></div>
+<div class="admin-stats"><article><span>Produits enregistrés</span><strong>{{ $productsCount }}</strong><a href="{{ route('admin.products.index') }}">Gérer les produits →</a></article><article><span>Commandes reçues</span><strong>{{ $ordersCount }}</strong><a href="{{ route('admin.orders.index') }}">Voir les commandes →</a></article><article><span>Commandes à traiter</span><strong>{{ $pendingOrders }}</strong><a href="{{ route('admin.orders.index') }}">Traiter →</a></article><article><span>Catégories</span><strong>{{ $categoriesCount }}</strong></article></div>
+<section class="admin-panel"><div class="admin-panel-head"><h2>Commandes récentes</h2><a class="text-link" href="{{ route('admin.orders.index') }}">Toutes les commandes →</a></div><div class="table-wrap"><table><thead><tr><th>Référence</th><th>Client</th><th>Date</th><th>Montant</th><th>Statut</th></tr></thead><tbody>@forelse($recentOrders as $order)<tr><td>{{ $order->reference }}</td><td>{{ $order->customer_name }}</td><td>{{ $order->created_at->format('d/m/Y H:i') }}</td><td>{{ number_format((float)$order->total,2) }} {{ $order->currency }}</td><td><span class="status-pill">{{ $order->status }}</span></td></tr>@empty<tr><td colspan="5">Aucune commande pour le moment.</td></tr>@endforelse</tbody></table></div></section>
+@endsection
