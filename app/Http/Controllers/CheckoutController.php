@@ -18,7 +18,7 @@ class CheckoutController extends Controller
   $rate=(float)config('storefront.usd_to_cdf_rate',2800);$subtotal=$data['currency']==='CDF'?round($cart['subtotal']*$rate,2):$cart['subtotal'];
   $order=Order::create(['reference'=>'CT-'.Str::upper(Str::random(8)),...$data,'subtotal'=>$subtotal,'delivery_fee'=>0,'total'=>$subtotal,'status'=>'pending','payment_status'=>'unpaid']);
   foreach($cart['items'] as $line){$unit=$data['currency']==='CDF'?round((float)$line['product']->price_usd*$rate,2):(float)$line['product']->price_usd;$order->items()->create(['product_id'=>$line['product']->id,'product_name'=>$line['product']->name,'sku'=>$line['product']->sku,'quantity'=>$line['quantity'],'unit_price'=>$unit,'line_total'=>$unit*$line['quantity']]);}
-  $request->session()->forget('cart');return redirect()->route('checkout.success',$order);
+  $request->session()->forget('cart');return redirect()->route('checkout.success',['order'=>$order->reference]);
  }
  public function success(Order $order): View {return view('checkout.success',['order'=>$order->load('items')]);}
  private function cart(Request $request): array {
