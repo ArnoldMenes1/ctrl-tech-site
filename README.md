@@ -1,107 +1,45 @@
-# CTRL-Tech — Boutique e-commerce
+# CTRL-TECH — Precision Technology Retail
 
-Nouvelle application officielle CTRL-Tech construite avec **Laravel 13, PHP, Blade, CSS et JavaScript**. Le projet est conçu pour fonctionner sur un PC Windows avec une base de données locale. Aucun service cloud n'est requis pour le développement local.
+Site vitrine e-commerce CTRL-TECH construit en **HTML5, CSS3 et JavaScript natifs**. Cette version est un frontend statique : aucun framework, serveur Node.js ou base de données distante n'est nécessaire pour l'ouvrir.
 
-## Stack
-- PHP 8.3+ et Laravel 13
-- Blade, CSS responsive, JavaScript et Vite
-- SQLite local par défaut ; MySQL local (XAMPP) également pris en charge
-- Authentification administrateur par session Laravel
+## Référence design
 
-## Fonctionnalités incluses
-- Accueil, catégories, catalogue, recherche, filtres et tri.
-- Fiches produits, descriptions et caractéristiques.
-- Panier en session.
-- Formulaire de demande de commande et confirmation avec référence.
-- Enregistrement des commandes et lignes de commande en base locale.
-- Devises USD et CDF avec taux de conversion configurable.
-- Pages À propos, Contact, Livraison & retours, Confidentialité et Conditions générales.
-- Espace administrateur protégé : connexion, tableau de bord, gestion des produits et catégories, suivi et mise à jour des commandes.
-- Migrations, catégories initiales, tests fonctionnels et interface responsive.
+Le système visuel suit la source officielle [Design System Precision Retail](https://github.com/ArnoldMenes1/ctrl-tech-plateforme/blob/main/docs/design/DESIGN-SYSTEM.md).
 
-**Données commerciales :** aucun produit, prix, stock, garantie ou délai fictif n'est préchargé. Les fiches produits sont en brouillon par défaut. Une demande de commande n'est pas un paiement : les disponibilités, frais de livraison et modalités de paiement sont confirmés par CTRL-Tech avant validation finale.
+- Palette : Graphite `#14232B`, Ivoire `#F3F0E8`, Orange signal `#D96B45`, Sauge `#B9C9B8`, Blanc `#FFFFFF`, Titane `#69777B`, Champagne `#E8C77A`.
+- Typographies : Space Grotesk, Instrument Sans et IBM Plex Mono.
+- Direction : Precision Retail, Editorial Grid, Layered Glass mesuré, Continuous Flow et 3D sélective.
+- Responsive mobile-first, focus visible et prise en charge de `prefers-reduced-motion`.
 
-## Prérequis
-- PHP 8.3+ avec extensions PDO SQLite (ou PDO MySQL si MySQL est utilisé), OpenSSL, Mbstring, Tokenizer, XML, Ctype, Fileinfo et cURL.
-- Composer 2.
-- Node.js LTS et npm.
+## Démarrage
 
-## Installation locale — Windows / PowerShell
-Téléchargez le dépôt, ouvrez PowerShell dans le dossier du projet puis exécutez :
+1. Télécharger le dépôt.
+2. Ouvrir `index.html` dans un navigateur moderne.
+3. Facultatif : ouvrir le dossier avec VS Code et lancer Live Server.
 
-    composer install
-    Copy-Item .env.example .env
-    php artisan key:generate
-    New-Item -ItemType File -Force database/database.sqlite
-    php artisan migrate --seed
-    npm install
-    npm run build
-    php artisan serve
+Aucune installation npm ou Composer n'est nécessaire pour cette version statique.
 
-Ouvrez ensuite http://127.0.0.1:8000.
+## Structure active
 
-Pour travailler avec rechargement automatique, ouvrez un deuxième terminal et exécutez npm run dev.
+- `index.html` — accueil, collections, sélection, présentation et contact.
+- `assets/css/style.css` — tokens, fondations, composants et responsive.
+- `assets/js/app.js` — navigation mobile, recherche, filtres, panier local et notifications.
+- `assets/media/ctrl-tech-mark.svg` — icône CTRL-TECH.
 
-## Base MySQL locale (option XAMPP)
-Créez une base vide ctrl_tech dans phpMyAdmin. Dans .env, remplacez la configuration SQLite par :
+## Interactions disponibles
 
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=ctrl_tech
-    DB_USERNAME=root
-    DB_PASSWORD=
+- Navigation desktop et mobile.
+- Recherche et filtrage des familles de produits.
+- Sélection de gammes dans un panier local via `localStorage`.
+- Suppression d'éléments de la sélection.
+- Raccourci de recherche `Ctrl/Cmd + K`.
 
-Puis lancez php artisan migrate --seed. Les données restent sur votre ordinateur.
+Le panier est une **sélection locale de démonstration**. Il ne transmet aucune commande au magasin et ne réalise aucun paiement.
 
-## Créer le compte administrateur
-Définissez dans .env vos propres identifiants (ne les publiez jamais sur GitHub) :
+## Données commerciales
 
-    ADMIN_NAME="Administrateur CTRL-Tech"
-    ADMIN_EMAIL="votre-adresse@example.com"
-    ADMIN_PASSWORD="un-mot-de-passe-long-et-unique"
+Les familles de produits et marques sont issues du cadrage du projet. Les références précises, prix, stocks, garanties, frais et délais de livraison, coordonnées opérationnelles et moyens de paiement ne sont pas inventés. Ils devront être confirmés par CTRL-TECH avant la publication de fiches produit et l'activation d'un vrai parcours de commande.
 
-Puis lancez :
+## Architecture cible
 
-    php artisan db:seed --class=AdminUserSeeder
-
-Connectez-vous sur http://127.0.0.1:8000/admin/connexion. Le seeder refuse les mots de passe de moins de 12 caractères. Aucun compte admin par défaut n'est créé.
-
-## Paramètres de la boutique
-Configurez dans .env :
-
-    USD_TO_CDF_RATE=2800
-    STORE_CONTACT_PHONE=
-    STORE_CONTACT_EMAIL=
-    STORE_ADDRESS="Lubumbashi, Haut-Katanga, RDC"
-
-Le taux de change est une valeur de configuration à actualiser avant utilisation. Les prix affichés et les stocks doivent être validés par l'équipe.
-
-## Images produits
-Les images locales sont prévues dans storage/app/public/products. Après avoir placé les fichiers, lancez php artisan storage:link et renseignez le chemin relatif dans la fiche produit, par exemple products/reference.webp.
-
-## Tests et qualité
-
-    php artisan test
-    vendor/bin/pint --test
-
-## Structure principale
-- app/Http/Controllers : storefront, panier, commande et administration.
-- app/Http/Middleware : protection de l'espace admin.
-- app/Models : utilisateurs, catégories, produits, commandes.
-- database/migrations : schéma relationnel local.
-- database/seeders : catégories et compte administrateur explicite.
-- resources/views : pages publiques et back-office Blade.
-- resources/css et resources/js : interface et interactions.
-- routes/web.php : routes publiques et protégées.
-
-## À finaliser avant ouverture commerciale
-- Vérification locale complète sur le PC cible.
-- Import du vrai catalogue, prix, photos, disponibilité, garanties et retours.
-- Gestion avancée des catégories et inventaire.
-- Définition définitive des frais et zones de livraison.
-- Choix et intégration d'un prestataire de paiement compatible avec le pays et le statut juridique de l'activité.
-- Notifications e-mail, suivi client et politique de confidentialité définitive.
-- Audit sécurité, tests de parcours et sauvegardes.
-
-Ne pas publier en production avant la validation de ces éléments, la configuration des secrets et APP_DEBUG=false.
+Cette version est volontairement frontend-only. La prochaine étape sera de connecter les interfaces à un backend local et à une base de données locale après validation du catalogue et des règles opérationnelles. Le navigateur ne doit jamais décider seul des prix, stocks, paiements ou autorisations.
