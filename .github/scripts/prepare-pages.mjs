@@ -33,11 +33,11 @@ const replacements = [
     "href=\"/produit/detail/?slug='+encodeURIComponent(p.id)+'\""
   ],
   [
-    "href=\"/categories/'+c[0]+'/'+'\"",
+    "href=\"/categories/'+c[0]+'/\"",
     "href=\"/categories/detail/?slug='+encodeURIComponent(c[0])+'\""
   ],
   [
-    "href=\"/marques/'+b.toLowerCase()+'/'+'\"",
+    "href=\"/marques/'+b.toLowerCase()+'/\"",
     "href=\"/marques/detail/?slug='+encodeURIComponent(b)+'\""
   ]
 ];
@@ -47,7 +47,7 @@ for (const [before, after] of replacements) {
 }
 const marker = '$("#site-footer").innerHTML=footer;document.title=';
 if (!js.includes(marker)) throw new Error("Page rendering marker not found");
-js = js.replace(marker, '$("#site-footer").innerHTML=footer;if(basePath){document.querySelectorAll(\\'a[href^="/"]\\').forEach(a=>a.setAttribute("href",basePath+a.getAttribute("href")));}document.title=');
+js = js.replace(marker, '$("#site-footer").innerHTML=footer;if(basePath){document.querySelectorAll(\'a[href^="/"]\').forEach(a=>a.setAttribute("href",basePath+a.getAttribute("href")));}document.title=');
 fs.writeFileSync(jsPath, js);
 fs.writeFileSync(path.join(root, ".nojekyll"), "");
 console.log("Prepared " + htmlFiles.length + " HTML pages for GitHub Pages.");
