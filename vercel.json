@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/categories/:slug",
+      "destination": "/categories/detail/?slug=:slug"
+    },
+    {
+      "source": "/marques/:slug",
+      "destination": "/marques/detail/?slug=:slug"
+    },
+    {
+      "source": "/produit/:slug",
+      "destination": "/produit/detail/?slug=:slug"
+    },
+    {
+      "source": "/compte/commandes/:id",
+      "destination": "/compte/commandes/detail/?id=:id"
+    }
+  ]
+}
