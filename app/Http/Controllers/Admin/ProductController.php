@@ -21,7 +21,7 @@ class ProductController extends Controller {
  }
  public function destroy(Product $product): RedirectResponse {$product->update(['is_active'=>false]);return back()->with('success','Produit désactivé.');}
  private function validated(Request $request): array {
-  return $request->validate(['category_id'=>['nullable','exists:categories,id'],'name'=>['required','string','max:180'],'sku'=>['nullable','string','max:80','unique:products,sku,'.($request->route('product')?->id ?? 'NULL')],'brand'=>['nullable','string','max:120'],'short_description'=>['nullable','string','max:255'],'description'=>['nullable','string'],'price_usd'=>['nullable','numeric','min:0'],'price_cdf'=>['nullable','numeric','min:0'],'stock_quantity'=>['required','integer','min:0'],'image_path'=>['nullable','string','max:255']]);
+  return $request->validate(['category_id'=>['nullable','exists:categories,id'],'name'=>['required','string','max:180'],'sku'=>['nullable','string','max:80','unique:products,sku,'.($request->route('product')?->id ?? 'NULL')],'brand'=>['nullable','string','max:120'],'short_description'=>['nullable','string','max:255'],'description'=>['nullable','string'],'price_usd'=>['nullable','numeric','min:0'],'stock_quantity'=>['required','integer','min:0'],'image_path'=>['nullable','string','max:255']]);
  }
  private function uniqueSlug(string $name,?int $ignore=null): string {$base=Str::slug($name);$slug=$base;$n=1;while(Product::where('slug',$slug)->when($ignore,fn($q)=>$q->where('id','!=',$ignore))->exists())$slug=$base.'-'.(++$n);return $slug;}
 }
