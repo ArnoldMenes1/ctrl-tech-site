@@ -19,6 +19,6 @@ class ProductController extends Controller
  }
  public function show(Product $product): View {
   abort_unless($product->is_active,404);
-  return view('products.show',['product'=>$product->load('category'),'relatedProducts'=>Product::where('is_active',true)->where('category_id',$product->category_id)->whereKeyNot($product->id)->take(4)->get()]);
+  return view('products.show',['product'=>$product->load('category'),'relatedProducts'=>Product::where('is_active',true)->where('category_id',$product->category_id)->where('id','!=',$product->id)->take(4)->get()]);
  }
 }
