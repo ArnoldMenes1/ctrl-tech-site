@@ -21,5 +21,6 @@
       "source": "/compte/commandes/:id",
       "destination": "/compte/commandes/detail/?id=:id"
     }
-  ]
+  ],
+  "framework": null
 }
