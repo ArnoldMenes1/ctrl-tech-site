@@ -7,6 +7,7 @@ use Tests\TestCase;
 class StorefrontTest extends TestCase
 {
  use RefreshDatabase;
+ protected function setUp(): void { parent::setUp(); $this->withoutVite(); }
  public function test_homepage_loads(): void {$this->get('/')->assertOk()->assertSee('CTRL-Tech');}
  public function test_catalogue_shows_active_products_only(): void {
   $category=Category::create(['name'=>'Accessoires','slug'=>'accessoires']);
