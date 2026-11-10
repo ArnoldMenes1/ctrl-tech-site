@@ -27,8 +27,9 @@ jobs:
       - name: Prepare static storefront
         run: |
           mkdir -p _site
-          rsync -a ./ _site/ --exclude='.git' --exclude='.github' --exclude='app' --exclude='bootstrap' --exclude='config' --exclude='database' --exclude='public' --exclude='resources' --exclude='routes' --exclude='storage' --exclude='tests' --exclude='vendor' --exclude='node_modules' --exclude='*.php' --exclude='artisan' --exclude='composer.json' --exclude='package.json' --exclude='vite.config.js' --exclude='phpunit.xml' --exclude='.env*' --exclude='vercel.json'
+          rsync -a ./ _site/ --exclude='.git' --exclude='.github' --exclude='app' --exclude='bootstrap' --exclude='config' --exclude='database' --exclude='public' --exclude='resources' --exclude='routes' --exclude='storage' --exclude='tests' --exclude='vendor' --exclude='node_modules' --exclude='*.php' --exclude='artisan' --exclude='composer.json' --exclude='package.json' --exclude='vite.config.js' --exclude='phpunit.xml' --exclude='.env*'
           node .github/scripts/prepare-pages.mjs _site
+          node --check _site/assets/js/pages.js
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
