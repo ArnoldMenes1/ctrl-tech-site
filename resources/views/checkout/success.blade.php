@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title','Demande enregistrée — CTRL-Tech')
+@section('content')
+<section class="container success-page"><div class="success-icon">✓</div><p class="eyebrow">DEMANDE ENREGISTRÉE</p><h1>Merci pour votre confiance.</h1><p>Votre demande a bien été enregistrée. Notre équipe vous contactera pour confirmer la disponibilité, la livraison et les modalités de paiement.</p><div class="order-reference"><span>Référence de commande</span><strong>{{ $order->reference }}</strong></div><div class="order-recap">@foreach($order->items as $item)<div><span>{{ $item->product_name }} × {{ $item->quantity }}</span><strong>{{ number_format((float)$item->line_total,2) }} {{ $order->currency }}</strong></div>@endforeach<div class="summary-total"><span>Total estimatif</span><strong>{{ number_format((float)$order->total,2) }} {{ $order->currency }}</strong></div></div><a class="btn btn-primary" href="{{ route('home') }}">Retour à l'accueil</a></section>
+@endsection
