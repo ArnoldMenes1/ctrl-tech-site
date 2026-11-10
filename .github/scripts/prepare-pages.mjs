@@ -29,16 +29,16 @@ const replacements = [
     'const basePath=location.pathname.startsWith("' + base + '")?"' + base + '":"", $=s=>document.querySelector(s), rawPath=(location.pathname.slice(basePath.length)||"/"), path='
   ],
   [
-    'href="/produit/\'+p.id+'/"',
-    'href="/produit/detail/?slug=\'+encodeURIComponent(p.id)+ '"'
+    "href=\"/produit/'+p.id+ '/\"",
+    "href=\"/produit/detail/?slug='+encodeURIComponent(p.id)+'\""
   ],
   [
-    'href="/categories/\'+c[0]+'/"',
-    'href="/categories/detail/?slug=\'+encodeURIComponent(c[0])+ '"'
+    "href=\"/categories/'+c[0]+ '/\"",
+    "href=\"/categories/detail/?slug='+encodeURIComponent(c[0])+'\""
   ],
   [
-    'href="/marques/\'+b.toLowerCase()+'/"',
-    'href="/marques/detail/?slug=\'+encodeURIComponent(b)+ '"'
+    "href=\"/marques/'+b.toLowerCase()+ '/\"",
+    "href=\"/marques/detail/?slug='+encodeURIComponent(b)+'\""
   ]
 ];
 for (const [before, after] of replacements) {
