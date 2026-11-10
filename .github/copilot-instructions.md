@@ -1,55 +1,31 @@
-# Instructions GitHub Copilot — CTRL-Tech
+# CTRL-TECH — Instructions de développement
 
-## Identité du projet
-CTRL-Tech est une boutique e-commerce mono-vendeur destinée au marché de la RDC, avec une première exploitation locale à Lubumbashi et une possibilité d'évolution internationale.
+## Stack frontend obligatoire
+- HTML5 sémantique, CSS3 natif et JavaScript vanilla.
+- Pas de React, Vue, Angular, Next.js, Tailwind, Bootstrap ou jQuery.
+- Pas de serveur Node.js ni de dépendance npm obligatoire pour exécuter le storefront.
+- Entrées actives : `index.html`, `assets/css/style.css`, `assets/js/app.js`.
 
-## Contraintes non négociables
-- Utiliser Laravel 13, PHP 8.3+, Blade, CSS et JavaScript classique.
-- Ne pas introduire React, Vue, Next.js, Node comme serveur applicatif, Neon, Supabase ou une base distante.
-- La base de données reste locale : SQLite par défaut ou MySQL local via XAMPP.
-- Toute interface doit rester responsive (mobile, tablette, desktop).
-- Ne jamais inventer de produits, prix, références, niveaux de stock, délais, garanties ou politiques commerciales.
-- Ne pas activer un produit sans validation de ses informations commerciales.
-- Ne pas intégrer un paiement réel tant que le prestataire et la capacité juridique de l'activité ne sont pas confirmés.
-- Une demande de commande n'est pas une preuve de paiement ni une commande confirmée.
-- Garder USD et CDF. Le taux de conversion est une configuration locale modifiable, pas une valeur de marché garantie.
+## Design system obligatoire
+Suivre la référence du dépôt `ctrl-tech-plateforme` : `docs/design/DESIGN-SYSTEM.md`.
+- Palette : graphite #14232B, ivoire #F3F0E8, orange #D96B45, sauge #B9C9B8, blanc #FFFFFF, titane #69777B, champagne #E8C77A.
+- Typographies : Space Grotesk, Instrument Sans, IBM Plex Mono.
+- Direction : Precision Retail / Editorial Grid / Layered Glass mesuré / Continuous Flow / 3D sélective.
+- Espacement base 4px, grille responsive, rayons mesurés, animations courtes.
+- Mobile-first, WCAG 2.2 AA comme cible, focus visible et prefers-reduced-motion.
 
-## Architecture
-- Routes web dans routes/web.php.
-- Contrôleurs publics dans app/Http/Controllers.
-- Contrôleurs d'administration dans app/Http/Controllers/Admin.
-- Protection back-office via auth + middleware admin.
-- Modèles Eloquent dans app/Models.
-- Migrations dans database/migrations.
-- Vues Blade dans resources/views.
-- Styles globaux dans resources/css/app.css.
-- Scripts dans resources/js.
-- Paramètres de boutique dans config/storefront.php et .env.
+## Règles métier non négociables
+- Marché initial : RDC, présence locale à Lubumbashi.
+- Ne jamais inventer références, prix, stock, garantie, frais, délais ou moyens de paiement.
+- Ne pas prétendre qu'une sélection locale est une commande confirmée.
+- Aucun paiement simulé ou présenté comme réel.
+- Les coordonnées et conditions commerciales doivent être confirmées.
+- Le panier de démonstration peut utiliser localStorage, mais toute vraie commande exige un backend, une base locale et une validation serveur.
 
-## Règles de développement
-- Valider toutes les données côté serveur.
-- Utiliser les protections CSRF Laravel pour les formulaires.
-- Ne jamais exposer de secret dans le dépôt.
-- Préférer les migrations réversibles et les relations Eloquent explicites.
-- Utiliser des transactions pour les opérations multi-tables.
-- Vérifier les autorisations sur chaque route d'administration.
-- Préserver les données de commande même si un produit est ensuite modifié ou désactivé.
-- Ne pas faire confiance aux montants envoyés par le navigateur : recalculer les totaux depuis la base.
-- Ne pas supprimer physiquement un produit référencé par une commande ; le désactiver.
-- Ajouter ou mettre à jour les tests pour toute fonctionnalité métier.
-- Garder les messages et libellés visibles en français.
-
-## Parcours métier
-1. Le visiteur consulte le catalogue.
-2. Il ajoute un produit tarifé et actif au panier.
-3. Il saisit ses coordonnées et son adresse de livraison.
-4. L'application enregistre une demande avec une référence unique.
-5. L'équipe confirme manuellement disponibilité, livraison et paiement.
-6. L'administrateur met à jour le statut de la commande.
-
-## Avant de conclure une modification
-- Vérifier les routes et noms de routes.
-- Vérifier les migrations SQLite et MySQL.
-- Exécuter php artisan test.
-- Exécuter npm run build.
-- Ne pas prétendre qu'un test a réussi sans l'avoir exécuté.
+## Qualité
+- HTML sémantique et accessible.
+- CSS organisé par tokens, fondations, composants, sections et responsive.
+- JavaScript sans dépendance et sans injection de HTML non fiable.
+- Pas de liens morts ni de boutons sans action.
+- Tester les vues mobile/tablette/desktop et le clavier.
+- Ne jamais déclarer un test exécuté s'il ne l'a pas été.
