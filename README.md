@@ -16,7 +16,7 @@ Nouvelle application officielle CTRL-Tech construite avec **Laravel 13, PHP, Bla
 - Enregistrement des commandes et lignes de commande en base locale.
 - Devises USD et CDF avec taux de conversion configurable.
 - Pages À propos, Contact, Livraison & retours, Confidentialité et Conditions générales.
-- Espace administrateur protégé : connexion, tableau de bord, gestion des produits, suivi et mise à jour des commandes.
+- Espace administrateur protégé : connexion, tableau de bord, gestion des produits et catégories, suivi et mise à jour des commandes.
 - Migrations, catégories initiales, tests fonctionnels et interface responsive.
 
 **Données commerciales :** aucun produit, prix, stock, garantie ou délai fictif n'est préchargé. Les fiches produits sont en brouillon par défaut. Une demande de commande n'est pas un paiement : les disponibilités, frais de livraison et modalités de paiement sont confirmés par CTRL-Tech avant validation finale.
