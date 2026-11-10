@@ -13,6 +13,6 @@ jobs:
         with:
           node-version: '22'
       - name: Validate JavaScript syntax
-        run: node --check assets/js/app.js
+        run: node --check assets/js/pages.js
       - name: Validate storefront assets
         run: node .github/scripts/check-static.mjs
