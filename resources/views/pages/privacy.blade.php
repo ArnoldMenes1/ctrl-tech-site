@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title','Confidentialité — CTRL-Tech')
+@section('content')
+<section class="page-intro"><div class="container"><p class="eyebrow">VOS DONNÉES</p><h1>Politique de confidentialité</h1></div></section><section class="container content-page"><h2>Données collectées</h2><p>Les informations communiquées lors d'une demande de commande sont utilisées pour traiter la demande, contacter le client et organiser la livraison.</p><h2>Conservation et sécurité</h2><p>Les données sont conservées pour les besoins de gestion de la commande et selon les obligations applicables. Les mesures techniques et la durée de conservation devront être précisées avant l'ouverture commerciale.</p><h2>Vos demandes</h2><p>Pour toute question relative à vos informations personnelles, contactez CTRL-Tech via les coordonnées publiées sur cette plateforme.</p></section>
+@endsection
