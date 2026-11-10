@@ -11,7 +11,6 @@
   const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch { return []; } };
   const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
   let cart = read("ctrltech-cart");
-  let compare = read("ctrltech-compare");
   let toastTimer;
   const toast = (message) => {
     const node = $("#toast"); node.textContent = message; node.classList.add("show");
@@ -19,7 +18,6 @@
   };
   const updateCounts = () => {
     $("#cart-count").textContent = cart.length;
-    $("#compare-count").textContent = compare.length;
     $("#drawer-count").textContent = "(" + cart.length + ")";
   };
   const renderCart = () => {
@@ -49,6 +47,7 @@
     const target = event.target.closest("button, a");
     if (!target) return;
     if (target.matches("[data-open-cart]")) openCart();
+    if (target.matches("[data-open-compare]")) toast("Le comparateur sera activé avec les fiches produits détaillées.");
     if (target.matches("[data-close-cart]")) closeCart();
     if (target.matches("[data-open-search]")) openSearch();
     if (target.matches("[data-close-search]")) closeSearch();
