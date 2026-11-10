@@ -1,0 +1,6 @@
+@extends('admin.layout')
+@section('title','Produits — CTRL-Tech')
+@section('content')
+<div class="admin-title"><div><p class="eyebrow">CATALOGUE</p><h1>Produits</h1><p>Gérez les fiches produits et leur publication.</p></div><a class="btn btn-primary" href="{{ route('admin.products.create') }}">Ajouter un produit +</a></div>
+<section class="admin-panel"><div class="table-wrap"><table><thead><tr><th>Produit</th><th>Référence</th><th>Catégorie</th><th>Prix USD</th><th>Stock</th><th>Publication</th><th></th></tr></thead><tbody>@forelse($products as $product)<tr><td>{{ $product->name }}</td><td>{{ $product->sku ?: '—' }}</td><td>{{ $product->category?->name ?: '—' }}</td><td>{{ $product->price_usd ? number_format((float)$product->price_usd,2) : 'À définir' }}</td><td>{{ $product->stock_quantity }}</td><td>{{ $product->is_active ? 'Publié' : 'Brouillon' }}</td><td><a class="text-link" href="{{ route('admin.products.edit',$product) }}">Modifier</a></td></tr>@empty<tr><td colspan="7">Aucun produit. Ajoutez uniquement des références commerciales confirmées.</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $products->links() }}</div></section>
+@endsection
