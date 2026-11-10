@@ -19,7 +19,7 @@ class CartController extends Controller
  public function destroy(Request $request,Product $product): RedirectResponse {$cart=$request->session()->get('cart',[]);unset($cart[$product->id]);$request->session()->put('cart',$cart);return back()->with('success','Produit retiré du panier.');}
  private function cart(Request $request): array {
   $items=[];$subtotal=0;
-  foreach($request->session()->get('cart',[]) as $id=>$line){$product=Product::where('is_active',true)->find($id);if(!$product)continue;$qty=(int)$line['quantity'];$lineTotal=(float)$product->price_usd*$qty;$items[]=['product'=>$product,'quantity'=>$qty,'line_total'=>$lineTotal];$subtotal+=$lineTotal;}
+  foreach($request->session()->get('cart',[]) as $id=>$line){$product=Product::where('is_active',true)->whereNotNull('price_usd')->find($id);if(!$product)continue;$qty=(int)$line['quantity'];$lineTotal=(float)$product->price_usd*$qty;$items[]=['product'=>$product,'quantity'=>$qty,'line_total'=>$lineTotal];$subtotal+=$lineTotal;}
   return ['items'=>$items,'subtotal'=>$subtotal,'count'=>array_sum(array_column($items,'quantity'))];
  }
 }
