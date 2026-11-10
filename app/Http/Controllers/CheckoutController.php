@@ -22,7 +22,7 @@ class CheckoutController extends Controller
  }
  public function success(Order $order): View {return view('checkout.success',['order'=>$order->load('items')]);}
  private function cart(Request $request): array {
-  $items=[];$subtotal=0;foreach($request->session()->get('cart',[]) as $id=>$line){$product=Product::where('is_active',true)->find($id);if(!$product)continue;$qty=(int)$line['quantity'];$lineTotal=(float)$product->price_usd*$qty;$items[]=['product'=>$product,'quantity'=>$qty,'line_total'=>$lineTotal];$subtotal+=$lineTotal;}
+  $items=[];$subtotal=0;foreach($request->session()->get('cart',[]) as $id=>$line){$product=Product::where('is_active',true)->whereNotNull('price_usd')->find($id);if(!$product)continue;$qty=(int)$line['quantity'];$lineTotal=(float)$product->price_usd*$qty;$items[]=['product'=>$product,'quantity'=>$qty,'line_total'=>$lineTotal];$subtotal+=$lineTotal;}
   return ['items'=>$items,'subtotal'=>$subtotal,'count'=>array_sum(array_column($items,'quantity'))];
  }
 }
