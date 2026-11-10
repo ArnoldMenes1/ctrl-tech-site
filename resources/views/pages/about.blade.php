@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('title','À propos — CTRL-Tech')
+@section('content')
+<section class="page-intro"><div class="container"><p class="eyebrow">QUI SOMMES-NOUS ?</p><h1>La technologie, avec un vrai sens du service.</h1><p>CTRL-Tech accompagne les particuliers et les professionnels dans le choix de leurs équipements technologiques.</p></div></section><section class="container content-page"><h2>Notre approche</h2><p>Nous mettons l'accent sur la qualité de l'information, le conseil et une expérience d'achat claire. Notre objectif est de rendre les équipements technologiques plus accessibles et plus simples à choisir.</p><h2>Notre engagement</h2><p>Présenter des informations fiables, confirmer les disponibilités avant validation et accompagner chaque client tout au long de sa demande.</p></section>
+@endsection
