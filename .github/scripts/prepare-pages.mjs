@@ -47,7 +47,7 @@ for (const [before, after] of replacements) {
 }
 const marker = '$("#site-footer").innerHTML=footer;document.title=';
 if (!js.includes(marker)) throw new Error("Page rendering marker not found");
-js = js.replace(marker, '$("#site-footer").innerHTML=footer;if(basePath){document.querySelectorAll(\'a[href^="/"]\').forEach(a=>a.setAttribute("href",basePath+a.getAttribute("href")));}document.title=');
+js = js.replace(marker, "$(\"#site-footer\").innerHTML=footer;if(basePath){document.querySelectorAll(\"a\").forEach(a=>{const h=a.getAttribute(\"href\");if(h&&h.startsWith(\"/\"))a.setAttribute(\"href\",basePath+h);});}document.title=");
 fs.writeFileSync(jsPath, js);
 fs.writeFileSync(path.join(root, ".nojekyll"), "");
 console.log("Prepared " + htmlFiles.length + " HTML pages for GitHub Pages.");
