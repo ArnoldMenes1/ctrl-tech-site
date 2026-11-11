@@ -5,8 +5,9 @@ Application e-commerce Laravel 13 / PHP classique pour CTRL-Tech, avec catalogue
 ## Stack
 - Laravel 13 / PHP 8.3+
 - Blade, Vite, JavaScript et CSS
-- SQLite pour le développement local ; PostgreSQL / Neon pour les environnements hébergés
-- Déploiement Vercel via le runtime communautaire vercel-php
+- SQLite ou MySQL pour le développement local ; PostgreSQL / Neon pour l'hébergement
+- Vercel Container Runtime avec FrankenPHP
+- Neon PostgreSQL en région Frankfurt (eu-central-1)
 
 ## Installation locale
 1. Installer PHP 8.3+, Composer, Node.js et les extensions PHP nécessaires (PDO SQLite ou PDO MySQL).
@@ -18,25 +19,27 @@ Application e-commerce Laravel 13 / PHP classique pour CTRL-Tech, avec catalogue
 7. Définir ADMIN_EMAIL et ADMIN_PASSWORD dans .env, puis exécuter php artisan db:seed --class=AdminUserSeeder.
 8. Exécuter npm run build, puis php artisan serve.
 
-## Catalogue de démonstration
-Le seeder importe des références électroniques repérées dans le catalogue public de Matik Business à Lubumbashi. Les prix sont des repères publics provenant d'un vendeur tiers ; ils ne sont pas les tarifs CTRL-Tech. Les stocks restent à zéro et les prix non confirmés : un administrateur doit vérifier et valider chaque prix et disponibilité avant d'activer l'achat en ligne.
+## Catalogue local
+Le catalogue de démonstration contient 22 références issues de catalogues publics de vendeurs présents à Lubumbashi : Matik Business, Telephone Lubumbashi, BCS-IT, PS STORE PRO et Forum Electronics. Les tarifs affichés sont des prix repères publics relevés chez des vendeurs tiers, pas des prix de vente CTRL-Tech. Les stocks sont volontairement à zéro et les prix non confirmés : un administrateur doit vérifier le prix, la disponibilité et les conditions avant d'activer l'achat en ligne.
 
-Les images distantes sont utilisées comme visuels de référence. Elles restent hébergées par leurs éditeurs respectifs ; leur disponibilité et leurs droits doivent être vérifiés avant un usage commercial durable.
+Les visuels sont chargés depuis les sites éditeurs ou vendeurs. Les liens externes et les droits d'utilisation commerciale doivent être vérifiés avant la mise en production commerciale.
 
 ## Administration
 - Connexion : /admin/connexion
-- Produits, catégories, commandes et inventaire depuis le tableau de bord.
+- Produits, catégories, marques, inventaire, mouvements de stock, commandes, clients, promotions, rapports et gestion des rôles.
+- Rôles : administrateur, gestionnaire, gestionnaire catalogue, opérateur commandes et analyste.
+- Profil administrateur : changement d'adresse e-mail et de mot de passe.
 - Créer le compte admin via ADMIN_EMAIL et ADMIN_PASSWORD (12 caractères minimum), puis lancer le seeder dédié.
 
-## Neon / Vercel
-- Créer un environnement Neon PostgreSQL et configurer DB_CONNECTION=pgsql, DB_URL, DB_SSLMODE=require.
-- Pour Vercel, configurer APP_KEY, APP_ENV=production, APP_DEBUG=false, APP_URL, DB_CONNECTION=pgsql, DB_URL, SESSION_DRIVER=database, CACHE_STORE=array, LOG_CHANNEL=stderr.
-- Exécuter les migrations sur la base Neon avant d'ouvrir le site.
-- vercel.json utilise vercel-php@0.5.2, un runtime PHP communautaire et non un runtime Vercel officiellement maintenu. Valider le build et les fonctions dans un environnement de préproduction avant mise en production.
-- Le stockage de fichiers local n'est pas persistant dans les fonctions serverless. Pour les images téléversées depuis l'administration, configurer un stockage objet durable avant l'exploitation réelle.
+## Déploiement Vercel + Neon
+- Le déploiement Vercel utilise Dockerfile.vercel et FrankenPHP PHP 8.3.
+- Neon PostgreSQL est provisionné dans la région Frankfurt (eu-central-1), avec une branche main pour la production et une branche preview pour les prévisualisations.
+- Variables Vercel requises : APP_KEY, APP_ENV, APP_DEBUG, APP_URL, DB_CONNECTION=pgsql, DB_URL, DB_SSLMODE=require, SESSION_DRIVER=database, SESSION_ENCRYPT=true, CACHE_STORE=array, LOG_CHANNEL=stderr.
+- Les migrations et le catalogue initial ont été provisionnés dans les deux branches Neon.
+- Le stockage local de fichiers n'est pas persistant entre les redémarrages de conteneur. Un bucket Neon Object Storage a été créé ; l'intégration des téléversements du back-office vers ce bucket reste à finaliser avant d'autoriser les uploads en production.
 
 ## Sécurité et exploitation
 - Ne jamais committer .env ou les secrets.
-- Définir APP_DEBUG=false en production.
-- Les commandes ne sont créées qu'après vérification serveur du prix confirmé et du stock.
-- Le paiement en ligne n'est pas activé : les commandes sont enregistrées comme demandes non payées, avec confirmation manuelle.
+- APP_DEBUG=false en production.
+- Le checkout vérifie côté serveur le prix confirmé et le stock avant d'enregistrer une commande.
+- Les commandes sont enregistrées comme non payées : aucun paiement en ligne n'est activé. La confirmation du paiement, de la livraison et du retrait reste manuelle.
