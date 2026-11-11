@@ -1,27 +1,42 @@
-# CTRL-TECH — site e-commerce multipage
+# CTRL-Tech — plateforme e-commerce
 
-Frontend en HTML5, CSS3 et JavaScript natifs. Pas de React ni de framework frontend.
+Application e-commerce Laravel 13 / PHP classique pour CTRL-Tech, avec catalogue public, comparateur, panier, checkout, suivi de commande et back-office.
 
-## Hébergement et aperçu
+## Stack
+- Laravel 13 / PHP 8.3+
+- Blade, Vite, JavaScript et CSS
+- SQLite pour le développement local ; PostgreSQL / Neon pour les environnements hébergés
+- Déploiement Vercel via le runtime communautaire vercel-php
 
-Le storefront est publié avec **GitHub Pages** via GitHub Actions. Une fois GitHub Pages activé avec la source **GitHub Actions**, l'adresse du site est :
+## Installation locale
+1. Installer PHP 8.3+, Composer, Node.js et les extensions PHP nécessaires (PDO SQLite ou PDO MySQL).
+2. Copier .env.example vers .env.
+3. Exécuter composer install puis npm install.
+4. Exécuter php artisan key:generate.
+5. Créer database/database.sqlite (ou configurer MySQL local).
+6. Exécuter php artisan migrate --seed.
+7. Définir ADMIN_EMAIL et ADMIN_PASSWORD dans .env, puis exécuter php artisan db:seed --class=AdminUserSeeder.
+8. Exécuter npm run build, puis php artisan serve.
 
-`https://arnoldmenes1.github.io/ctrl-tech-site/`
+## Catalogue de démonstration
+Le seeder importe des références électroniques repérées dans le catalogue public de Matik Business à Lubumbashi. Les prix sont des repères publics provenant d'un vendeur tiers ; ils ne sont pas les tarifs CTRL-Tech. Les stocks restent à zéro et les prix non confirmés : un administrateur doit vérifier et valider chaque prix et disponibilité avant d'activer l'achat en ligne.
 
-Le workflow `.github/workflows/pages.yml` prépare les chemins d'assets et les routes de détail pour l'hébergement statique avant publication.
-
-## Pages publiques
-
-Accueil, catalogue, catégories et détails, marques et détails, fiche produit, comparateur (3 produits maximum), panier, connexion, inscription, récupération et réinitialisation du mot de passe, validation et confirmation de commande, compte client, commandes et détail, suivi, profil, à propos, contact, livraison, garanties et retours, FAQ, conditions générales, confidentialité, 404 et erreur.
+Les images distantes sont utilisées comme visuels de référence. Elles restent hébergées par leurs éditeurs respectifs ; leur disponibilité et leurs droits doivent être vérifiés avant un usage commercial durable.
 
 ## Administration
+- Connexion : /admin/connexion
+- Produits, catégories, commandes et inventaire depuis le tableau de bord.
+- Créer le compte admin via ADMIN_EMAIL et ADMIN_PASSWORD (12 caractères minimum), puis lancer le seeder dédié.
 
-Espace séparé sous `/administration/` : tableau de bord, produits, marques, catégories, médias, inventaire, commandes, clients, promotions, rapports, équipe et permissions, paramètres boutique et journal d'activité.
+## Neon / Vercel
+- Créer un environnement Neon PostgreSQL et configurer DB_CONNECTION=pgsql, DB_URL, DB_SSLMODE=require.
+- Pour Vercel, configurer APP_KEY, APP_ENV=production, APP_DEBUG=false, APP_URL, DB_CONNECTION=pgsql, DB_URL, SESSION_DRIVER=database, CACHE_STORE=array, LOG_CHANNEL=stderr.
+- Exécuter les migrations sur la base Neon avant d'ouvrir le site.
+- vercel.json utilise vercel-php@0.5.2, un runtime PHP communautaire et non un runtime Vercel officiellement maintenu. Valider le build et les fonctions dans un environnement de préproduction avant mise en production.
+- Le stockage de fichiers local n'est pas persistant dans les fonctions serverless. Pour les images téléversées depuis l'administration, configurer un stockage objet durable avant l'exploitation réelle.
 
-## Architecture
-
-Chaque route possède son propre fichier HTML. Les pages partagent `assets/css/pages.css` et `assets/js/pages.js`. Les routes de détail utilisent des paramètres d'URL compatibles avec l'hébergement statique. Les anciens fichiers Laravel peuvent subsister dans le dépôt, mais ne sont pas utilisés par le storefront statique.
-
-## Limites
-
-Les pages et leurs interfaces sont structurées. Les comptes, produits réels, stocks, commandes, paiements, formulaires et droits d'administration nécessitent un backend et une base de données. Les actions non connectées sont présentées comme prototypes.
+## Sécurité et exploitation
+- Ne jamais committer .env ou les secrets.
+- Définir APP_DEBUG=false en production.
+- Les commandes ne sont créées qu'après vérification serveur du prix confirmé et du stock.
+- Le paiement en ligne n'est pas activé : les commandes sont enregistrées comme demandes non payées, avec confirmation manuelle.
