@@ -1,0 +1,7 @@
+@extends('admin.layout')
+@section('title','Marques — CTRL-Tech')
+@section('content')
+<div class="admin-title"><div><p class="eyebrow">CATALOGUE</p><h1>Marques</h1><p>Référentiel des marques commercialisées.</p></div></div>
+<form class="checkout-form admin-form" method="POST" action="{{ route('admin.brands.store') }}">@csrf<h2>Ajouter une marque</h2><div class="form-grid"><label>Nom<input name="name" required></label><label>Description<input name="description"></label></div><button class="btn btn-primary">Ajouter</button></form>
+<section class="admin-panel"><div class="table-wrap"><table><thead><tr><th>Marque</th><th>Produits associés</th><th>État</th><th>Modifier</th></tr></thead><tbody>@forelse($brands as $brand)<tr><td><strong>{{ $brand->name }}</strong></td><td>{{ $brand->products_count }}</td><td>{{ $brand->is_active?'Active':'Désactivée' }}</td><td><form method="POST" action="{{ route('admin.brands.update',$brand) }}">@csrf @method('PATCH')<input name="name" value="{{ $brand->name }}" required><input name="description" value="{{ $brand->description }}"><label><input type="checkbox" name="is_active" value="1" @checked($brand->is_active)> Active</label><button class="text-link">Enregistrer</button></form><form method="POST" action="{{ route('admin.brands.destroy',$brand) }}">@csrf @method('DELETE')<button class="remove-link">Désactiver</button></form></td></tr>@empty<tr><td colspan="4">Aucune marque enregistrée.</td></tr>@endforelse</tbody></table></div>{{ $brands->links() }}</section>
+@endsection
