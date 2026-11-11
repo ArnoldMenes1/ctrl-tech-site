@@ -1,6 +1,6 @@
-import {FormEvent,useState} from "react";
+import {useState} from "react";\nimport type {FormEvent} from "react";
 import {Link,NavLink,useLocation,useNavigate} from "react-router-dom";
-import {Search,ShoppingBag,Menu,X,ChevronDown,ArrowUpRight} from "lucide-react";
+import {Search,ShoppingBag,Menu,X,ArrowUpRight} from "lucide-react";
 export default function SiteLayout({children,cartCount}:{children:React.ReactNode;cartCount:number}){
  const [mobile,setMobile]=useState(false); const [query,setQuery]=useState(""); const nav=useNavigate(); const loc=useLocation();
  const submit=(e:FormEvent)=>{e.preventDefault();nav("/catalogue?q="+encodeURIComponent(query));setMobile(false)};
