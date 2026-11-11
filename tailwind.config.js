@@ -1,0 +1,1 @@
+export default {content:["./index.html","./src/**/*.{ts,tsx}"],theme:{extend:{colors:{graphite:"#14232B",ivory:"#F3F0E8",signal:"#D96B45",sage:"#B9C9B8",champagne:"#E8C77A",titanium:"#69777B"},fontFamily:{display:["Space Grotesk","sans-serif"],body:["Instrument Sans","sans-serif"],mono:["IBM Plex Mono","monospace"]}}},plugins:[]};

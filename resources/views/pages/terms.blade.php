@@ -1,5 +1,0 @@
-@extends('layouts.app')
-@section('title','Conditions générales — CTRL-Tech')
-@section('content')
-<section class="page-intro"><div class="container"><p class="eyebrow">CADRE COMMERCIAL</p><h1>Conditions générales</h1></div></section><section class="container content-page"><h2>Commandes</h2><p>La soumission du formulaire constitue une demande de commande et non une confirmation automatique de vente. CTRL-Tech confirme la disponibilité, le prix final, les frais de livraison et les modalités de paiement avant validation.</p><h2>Prix et disponibilité</h2><p>Les prix et stocks doivent être vérifiés par CTRL-Tech. Les informations affichées ne remplacent pas la confirmation commerciale.</p><h2>Paiement et livraison</h2><p>Les moyens de paiement acceptés et les modalités de livraison seront communiqués avant la confirmation définitive de la commande.</p></section>
-@endsection
