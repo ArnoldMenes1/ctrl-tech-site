@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.5.2",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index.php" }
+  ],
+  "buildCommand": "composer install --no-dev --optimize-autoloader && npm install && npm run build",
+  "installCommand": "composer install --no-dev --optimize-autoloader && npm install"
+}
