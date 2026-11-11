@@ -93,10 +93,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       quantities.set(productId, (quantities.get(productId) || 0) + quantity);
     }
 
+    const requestedIds = [...quantities.keys()].map((product_id) => ({ product_id }));
+    const priceRows = await sql`
+      SELECT product_id, price_usd
+      FROM storefront.catalog_prices
+      WHERE product_id IN (
+        SELECT item.product_id
+        FROM jsonb_to_recordset(${JSON.stringify(requestedIds)}::jsonb) AS item(product_id text)
+      )
+    `;
+    const databasePrices = new Map(
+      priceRows.map((row) => [String(row.product_id), Number(row.price_usd)])
+    );
+
     const pricedItems = [];
     for (const [productId, quantity] of quantities) {
       const product = products.find((entry) => entry.id === productId);
-      if (!product || quantity > 20) {
+      const unitPrice = databasePrices.get(productId);
+      if (!product || !Number.isFinite(unitPrice) || quantity > 20) {
         return sendError(res, 400, "Une référence du panier n'est plus disponible.");
       }
       pricedItems.push({
@@ -105,8 +119,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         product_name: product.name,
         brand: product.brand,
         quantity,
-        unit_price_usd: product.priceUsd,
-        line_total_usd: Number((product.priceUsd * quantity).toFixed(2)),
+        unit_price_usd: unitPrice,
+        line_total_usd: Number((unitPrice * quantity).toFixed(2)),
       });
     }
 
