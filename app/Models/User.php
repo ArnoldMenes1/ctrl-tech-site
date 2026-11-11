@@ -9,6 +9,16 @@ class User extends Authenticatable {
  protected $fillable=['name','email','password','role','phone','address','is_active'];
  protected $hidden=['password','remember_token'];
  protected function casts(): array {return ['email_verified_at'=>'datetime','password'=>'hashed','is_active'=>'boolean'];}
- public function isAdmin(): bool {return in_array($this->role,['admin','manager','catalog_manager','operator'],true);}
+ public function isAdmin(): bool {return in_array($this->role,['admin','manager','catalog_manager','operator','analyst'],true);}
+ public function hasPermission(string $permission): bool {
+  return match($permission) {
+   'catalog'=>in_array($this->role,['admin','manager','catalog_manager'],true),
+   'orders','customers'=>in_array($this->role,['admin','manager','operator'],true),
+   'promotions'=>in_array($this->role,['admin','manager'],true),
+   'reports'=>in_array($this->role,['admin','manager','analyst'],true),
+   'team'=>$this->role==='admin',
+   default=>false,
+  };
+ }
  public function orders(): HasMany {return $this->hasMany(Order::class);}
 }
