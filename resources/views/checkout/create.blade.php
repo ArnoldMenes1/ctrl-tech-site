@@ -11,8 +11,9 @@
 <label class="span-2">Adresse de livraison<textarea name="delivery_address" required rows="3">{{ old('delivery_address',auth()->user()?->address) }}</textarea></label>
 <label>Devise<select name="currency"><option value="USD" @selected(old('currency','USD')==='USD')>Dollar américain (USD)</option><option value="CDF" @selected(old('currency')==='CDF')>Franc congolais (CDF)</option></select></label>
 <label>Mode de réception<select name="delivery_method"><option value="local_delivery">Livraison locale (à confirmer)</option><option value="pickup">Retrait (à confirmer)</option></select></label>
+<label>Code promotionnel<input name="promotion_code" value="{{ old('promotion_code') }}" placeholder="CODE"></label>
 <label class="span-2">Informations complémentaires<textarea name="notes" rows="3">{{ old('notes') }}</textarea></label></div>
-<div class="notice">La commande sera enregistrée après une dernière vérification serveur du prix et du stock. Le paiement et les frais de livraison seront confirmés séparément par CTRL-Tech.</div>
+<div class="notice">La commande est enregistrée après vérification serveur du prix et du stock. Le paiement et les frais de livraison sont confirmés séparément par CTRL-Tech.</div>
 <button class="btn btn-primary" type="submit">Confirmer ma commande</button></form>
-<aside class="cart-summary"><h2>Votre commande</h2>@foreach($cart['items'] as $line)<div class="summary-item"><span>{{ $line['product']->name }} × {{ $line['quantity'] }}</span><strong>{{ number_format($line['line_total'],2) }} USD</strong></div>@endforeach<div class="summary-total"><span>Sous-total (USD)</span><strong>{{ number_format($cart['subtotal'],2) }}</strong></div><p>Le montant final en CDF sera calculé selon le taux configuré au moment de la commande.</p></aside></section>
+<aside class="cart-summary"><h2>Votre commande</h2>@foreach($cart['items'] as $line)<div class="summary-item"><span>{{ $line['product']->name }} × {{ $line['quantity'] }}</span><strong>{{ number_format($line['line_total'],2) }} USD</strong></div>@endforeach<div class="summary-total"><span>Sous-total (USD)</span><strong>{{ number_format($cart['subtotal'],2) }}</strong></div><p>Le montant final en CDF est calculé selon le taux configuré au moment de la commande.</p></aside></section>
 @endsection
