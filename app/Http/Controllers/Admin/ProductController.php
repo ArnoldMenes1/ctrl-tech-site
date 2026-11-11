@@ -38,7 +38,7 @@ class ProductController extends Controller {
    'price_usd'=>['nullable','numeric','min:0'],'price_cdf'=>['nullable','numeric','min:0'],
    'availability_status'=>['required','in:in_stock,out_of_stock,to_confirm,preorder'],
    'stock_quantity'=>['required','integer','min:0'],'low_stock_threshold'=>['required','integer','min:0'],
-   'source_name'=>['nullable','string','max:160'],'source_url'=>['nullable','url','max:500'],
+   'source_name'=>['nullable','string','max:160'],'source_url'=>['nullable','url','max:500'],'image_path'=>['nullable','string','max:500'],
    'image'=>['nullable','image','max:5120'],'specifications'=>['nullable','array'],
   ]);
  }
