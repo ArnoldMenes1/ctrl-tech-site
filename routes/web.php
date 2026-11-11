@@ -46,7 +46,7 @@ Route::view('/livraison-retours','pages.shipping')->name('shipping');
 Route::view('/confidentialite','pages.privacy')->name('privacy');
 Route::view('/conditions-generales','pages.terms')->name('terms');
 
-Route::prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function(){\n Route::get('/initialisation',[SetupController::class,'show'])->name('setup');\n Route::post('/initialisation',[SetupController::class,'store'])->middleware('throttle:5,1')->name('setup.store');
  Route::get('/connexion',[AdminAuthController::class,'show'])->name('login');
  Route::post('/connexion',[AdminAuthController::class,'login'])->middleware('throttle:5,1')->name('login.submit');
  Route::middleware(['auth','admin'])->group(function(){

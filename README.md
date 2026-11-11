@@ -29,7 +29,8 @@ Les visuels sont chargés depuis les sites éditeurs ou vendeurs. Les liens exte
 - Produits, catégories, marques, inventaire, mouvements de stock, commandes, clients, promotions, rapports et gestion des rôles.
 - Rôles : administrateur, gestionnaire, gestionnaire catalogue, opérateur commandes et analyste.
 - Profil administrateur : changement d'adresse e-mail et de mot de passe.
-- Créer le compte admin via ADMIN_EMAIL et ADMIN_PASSWORD (12 caractères minimum), puis lancer le seeder dédié.
+- Sur Vercel, ouvrir une seule fois /admin/initialisation avec le jeton ADMIN_SETUP_TOKEN, puis choisir votre propre e-mail et mot de passe administrateur. Le formulaire se désactive automatiquement après la création du premier admin.
+- En local, vous pouvez toujours utiliser ADMIN_EMAIL et ADMIN_PASSWORD puis lancer le seeder dédié.
 
 ## Déploiement Vercel + Neon
 - Le déploiement Vercel utilise Dockerfile.vercel et FrankenPHP PHP 8.3.
