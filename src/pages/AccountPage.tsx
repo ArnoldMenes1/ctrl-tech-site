@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, LogOut, PackageCheck, UserRound } from "lucide-react";
-import { authClient } from "../lib/auth";
+import { authClient, getAuthToken } from "../lib/auth";
 import { formatUsd } from "../lib/pricing";
 
 type Order = {
@@ -42,7 +42,7 @@ export default function AccountPage() {
     setOrdersError("");
     void (async () => {
       try {
-        const token = await authClient.getJWTToken();
+        const token = await getAuthToken();
         if (!token) throw new Error("Session introuvable. Reconnectez-vous.");
         const response = await fetch("/api/orders", {
           headers: { Authorization: "Bearer " + token },
