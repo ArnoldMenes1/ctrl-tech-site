@@ -50,7 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
  Route::get('/connexion',[AdminAuthController::class,'show'])->name('login');
  Route::post('/connexion',[AdminAuthController::class,'login'])->middleware('throttle:5,1')->name('login.submit');
  Route::middleware(['auth','admin'])->group(function(){
-  Route::post('/deconnexion',[AdminAuthController::class,'logout'])->name('logout');
+  Route::post('/deconnexion',[AdminAuthController::class,'logout'])->name('logout');\n  Route::get('/profil',[ProfileController::class,'edit'])->name('profile.edit');\n  Route::patch('/profil',[ProfileController::class,'update'])->name('profile.update');
   Route::get('/',[AdminDashboardController::class,'index'])->name('dashboard');
   Route::middleware('permission:catalog')->group(function(){
    Route::resource('produits',AdminProductController::class)->parameters(['produits'=>'product'])->except(['show'])->names(['index'=>'products.index','create'=>'products.create','store'=>'products.store','edit'=>'products.edit','update'=>'products.update','destroy'=>'products.destroy']);

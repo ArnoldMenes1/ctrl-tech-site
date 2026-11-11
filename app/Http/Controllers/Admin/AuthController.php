@@ -9,7 +9,7 @@ class AuthController extends Controller {
  public function show(): View {return view('admin.login');}
  public function login(Request $request): RedirectResponse {
   $credentials=$request->validate(['email'=>['required','email'],'password'=>['required','string']]);
-  if(!Auth::attempt($credentials,true)) return back()->withErrors(['email'=>'Identifiants invalides.'])->onlyInput('email');
+  if(!Auth::attempt([...$credentials,'is_active'=>true],true)) return back()->withErrors(['email'=>'Identifiants invalides ou compte désactivé.'])->onlyInput('email');
   $request->session()->regenerate();
   if(!$request->user()->isAdmin()){Auth::logout();$request->session()->invalidate();$request->session()->regenerateToken();return back()->withErrors(['email'=>'Ce compte ne dispose pas des droits administrateur.']);}
   return redirect()->intended(route('admin.dashboard'));
