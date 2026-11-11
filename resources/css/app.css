@@ -91,3 +91,44 @@ th,td{border-color:var(--line)}
 .product-card small,.detail-price small{color:#98723A}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* CTRL-Tech — stronger, consistent rounded geometry */
+:root{
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:22px;
+  --radius-xl:28px;
+}
+.search,.catalog-toolbar select,.form-grid input,.form-grid textarea,.form-grid select,
+.add-cart input,.quantity-form input,.filter-form,.filter-form input,.filter-form select,
+.auth-form input,.login-card input,.admin-form input,.admin-form select,.admin-form textarea,
+.inventory-form input,.inventory-form select,.pagination a,.pagination span{
+  border-radius:var(--radius-sm);
+}
+.brand-mark{border-radius:12px}
+.search{border-radius:var(--radius-md)}
+.btn,.btn-primary,.btn-light{border-radius:var(--radius-md);padding:14px 22px}
+.hero{border-radius:0 0 var(--radius-xl) var(--radius-xl)}
+.category-tile{border-radius:var(--radius-lg);transition:background .2s,transform .2s}
+.category-tile:hover{transform:translateY(-3px)}
+.product-card{border-radius:var(--radius-lg);overflow:hidden}
+.product-image{border-radius:calc(var(--radius-lg) - 2px) calc(var(--radius-lg) - 2px) 0 0}
+.product-tag{border-radius:999px;padding:6px 11px}
+.cta-band{border-radius:var(--radius-xl)}
+.detail-image{border-radius:var(--radius-xl)}
+.cart-summary,.checkout-form,.login-card,.admin-stats article,.admin-panel{
+  border-radius:var(--radius-lg);
+}
+.notice,.flash,.empty-state,.tracking-result,.order-reference,.order-recap{
+  border-radius:var(--radius-md);
+}
+.compare-mini,.status-pill{border-radius:999px}
+.cart-thumb{border-radius:var(--radius-sm)}
+.product-card:hover{box-shadow:0 22px 48px rgba(20,35,43,.13)}
+.admin-header{border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+@media(max-width:650px){
+  .hero{border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+  .product-card{border-radius:var(--radius-md)}
+  .cta-band{border-radius:var(--radius-lg)}
+}
