@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Banknote, ShieldCheck } from "lucide-react";
 import type { Product } from "../catalog";
-import { authClient } from "../lib/auth";
+import { authClient, getAuthToken } from "../lib/auth";
 import { formatCdf, formatUsd } from "../lib/pricing";
 
 export default function CheckoutPage({ cart, onClear }: { cart: Product[]; onClear: () => void }) {
@@ -40,7 +40,7 @@ export default function CheckoutPage({ cart, onClear }: { cart: Product[]; onCle
     setBusy(true);
     setError("");
     try {
-      const token = await authClient.getJWTToken();
+      const token = await getAuthToken();
       if (!token) throw new Error("Votre session a expiré. Reconnectez-vous.");
       const response = await fetch("/api/orders", {
         method: "POST",
