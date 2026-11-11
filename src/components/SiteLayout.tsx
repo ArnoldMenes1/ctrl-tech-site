@@ -1,4 +1,5 @@
-import {useState} from "react";\nimport type {FormEvent} from "react";
+import {useState} from "react";
+import type {FormEvent} from "react";
 import {Link,NavLink,useLocation,useNavigate} from "react-router-dom";
 import {Search,ShoppingBag,Menu,X,ArrowUpRight} from "lucide-react";
 export default function SiteLayout({children,cartCount}:{children:React.ReactNode;cartCount:number}){
