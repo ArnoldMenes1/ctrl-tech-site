@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, LogOut, PackageCheck, UserRound } from "lucide-react";
 import { authClient } from "../lib/auth";
-import { formatCdf, formatUsd } from "../lib/pricing";
+import { formatUsd } from "../lib/pricing";
 
 type Order = {
   id: number;
