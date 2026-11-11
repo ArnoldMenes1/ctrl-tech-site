@@ -1,31 +1,40 @@
 # CTRL-TECH — Instructions de développement
 
-## Stack frontend obligatoire
-- HTML5 sémantique, CSS3 natif et JavaScript vanilla.
-- Pas de React, Vue, Angular, Next.js, Tailwind, Bootstrap ou jQuery.
-- Pas de serveur Node.js ni de dépendance npm obligatoire pour exécuter le storefront.
-- Entrées actives : `index.html`, `assets/css/style.css`, `assets/js/app.js`.
+## Architecture de référence
+Respecter le rapport général CTRL-TECH :
+- Frontend : React + TypeScript strict + Vite.
+- UI : Tailwind CSS 3 et composants accessibles.
+- Navigation : React Router.
+- Données serveur : TanStack Query.
+- Formulaires : React Hook Form + Zod.
+- Backend : Vercel Functions / Node.js / TypeScript.
+- Base : Neon PostgreSQL.
+- ORM : Drizzle ORM.
+- Authentification : Neon Managed Better Auth.
+- Hébergement : Vercel.
+- Tests : Vitest, React Testing Library et Playwright.
 
-## Design system obligatoire
-Suivre la référence du dépôt `ctrl-tech-plateforme` : `docs/design/DESIGN-SYSTEM.md`.
-- Palette : graphite #14232B, ivoire #F3F0E8, orange #D96B45, sauge #B9C9B8, blanc #FFFFFF, titane #69777B, champagne #E8C77A.
+Ne pas réintroduire Laravel, Blade, PHP, Eloquent, SQLite ou un serveur Apache.
+
+## Design system
+- Palette : Graphite #14232B, Ivoire #F3F0E8, Orange #D96B45, Sauge #B9C9B8, Blanc #FFFFFF, Titane #69777B, Champagne #E8C77A.
 - Typographies : Space Grotesk, Instrument Sans, IBM Plex Mono.
-- Direction : Precision Retail / Editorial Grid / Layered Glass mesuré / Continuous Flow / 3D sélective.
-- Espacement base 4px, grille responsive, rayons mesurés, animations courtes.
+- Direction : Precision Retail.
 - Mobile-first, WCAG 2.2 AA comme cible, focus visible et prefers-reduced-motion.
+- Utiliser les tokens et composants partagés ; conserver des rayons généreux et cohérents.
 
-## Règles métier non négociables
-- Marché initial : RDC, présence locale à Lubumbashi.
-- Ne jamais inventer références, prix, stock, garantie, frais, délais ou moyens de paiement.
-- Ne pas prétendre qu'une sélection locale est une commande confirmée.
-- Aucun paiement simulé ou présenté comme réel.
-- Les coordonnées et conditions commerciales doivent être confirmées.
-- Le panier de démonstration peut utiliser localStorage, mais toute vraie commande exige un backend, une base locale et une validation serveur.
+## Règles métier
+- Marché initial : RDC, Lubumbashi.
+- Ne jamais inventer prix, stock, garantie, frais, délais ou moyens de paiement.
+- Les références du catalogue de démonstration ne valent pas validation commerciale.
+- Ne jamais présenter une sélection locale comme une commande confirmée.
+- Toute vraie commande exige API, base de données et vérification serveur des prix et stocks.
+- Aucun paiement réel sans intégration et confirmation serveur fiable.
+- Ne jamais exposer les secrets Neon dans le navigateur.
 
 ## Qualité
-- HTML sémantique et accessible.
-- CSS organisé par tokens, fondations, composants, sections et responsive.
-- JavaScript sans dépendance et sans injection de HTML non fiable.
+- TypeScript strict ; valider les entrées avec Zod.
+- Tests unitaires, intégration et E2E pour les parcours critiques.
 - Pas de liens morts ni de boutons sans action.
-- Tester les vues mobile/tablette/desktop et le clavier.
+- Tester mobile, tablette, desktop et navigation clavier.
 - Ne jamais déclarer un test exécuté s'il ne l'a pas été.

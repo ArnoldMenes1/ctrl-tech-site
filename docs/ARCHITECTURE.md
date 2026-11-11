@@ -1,63 +1,56 @@
-# Architecture fonctionnelle et technique — CTRL-Tech
+# Architecture fonctionnelle et technique — CTRL-TECH
 
-## 1. Périmètre
-Boutique e-commerce mono-vendeur pour équipements informatiques, téléphones, accessoires, périphériques et connectivité. Le premier marché est la RDC ; USD et CDF sont prévus. La base de données reste locale au PC qui héberge l'application pendant la phase de test.
+## 1. Référence
+Ce document suit le rapport général CTRL-TECH (novembre 2026). Il distingue l'architecture cible des fonctions déjà visibles dans le Preview.
 
-## 2. Architecture applicative
-Application Laravel 13 monolithique, rendue côté serveur avec Blade. Le navigateur reçoit HTML, CSS et JavaScript ; les traitements métier et l'accès aux données restent dans Laravel.
+## 2. Stack de référence
+- Frontend : React, TypeScript strict et Vite.
+- UI : Tailwind CSS 3 et composants accessibles.
+- Routage : React Router.
+- Données serveur : TanStack Query.
+- Formulaires : React Hook Form et Zod.
+- Backend : Vercel Functions / Node.js / TypeScript.
+- Base de données : Neon PostgreSQL.
+- ORM : Drizzle ORM.
+- Authentification : Neon Managed Better Auth.
+- Stockage média : stockage objet retenu pour les médias.
+- Tests : Vitest, React Testing Library et Playwright.
+- Hébergement : Vercel.
 
-- Présentation : Blade + CSS responsive + JavaScript.
-- Métier : contrôleurs Laravel.
-- Persistance : Eloquent ORM.
-- Stockage : SQLite local par défaut, MySQL local facultatif.
-- Assets : Vite.
-- Back-office : authentification Laravel, rôle admin et middleware dédié.
-
-## 3. Modules
+## 3. Modules fonctionnels prévus
 ### Boutique publique
-- Accueil et navigation.
-- Catégories et catalogue.
-- Recherche par nom, marque et référence.
-- Filtrage par catégorie et tri par prix.
-- Fiche produit, description, caractéristiques et photo locale.
-- Panier en session.
-- Formulaire de demande de commande.
-- Confirmation et référence de commande.
-- Pages de présentation, contact, livraison/retours, confidentialité et conditions générales.
+Accueil, catalogue, catégories, marques, fiches produits, recherche, filtres, comparateur limité à trois références d'une même famille, panier, authentification client, checkout, confirmation et suivi de commande.
 
-### Administration
-- Connexion administrateur.
-- Tableau de bord avec indicateurs.
-- Gestion des catégories.
-- Création et modification des produits.
-- Publication ou désactivation des produits.
-- Consultation des commandes.
-- Mise à jour du statut de commande et du statut de paiement (suivi manuel uniquement).
+### Espace client
+Profil, adresses, historique des commandes, détail et suivi.
 
-## 4. Modèle de données
-- users : comptes et rôles.
-- categories : catégories de produits.
-- products : références, prix, images, disponibilité et caractéristiques.
-- orders : coordonnées client, livraison, devise, montants et statuts.
-- order_items : instantané du nom, SKU, quantité et prix de chaque ligne au moment de la commande.
+### Back-office
+Dashboard, produits, marques, catégories, médias, inventaire, mouvements de stock, commandes, clients, promotions, rapports, équipe, permissions, paramètres et journal d'activité.
 
-## 5. Relations
-- Une catégorie possède plusieurs produits.
-- Un produit appartient éventuellement à une catégorie.
-- Une commande possède plusieurs lignes.
-- Une ligne de commande référence éventuellement un produit ; son nom, son SKU et son prix sont copiés afin de conserver l'historique commercial.
+## 4. Architecture logique cible
+Navigateur React → API Vercel Functions → validation Zod et autorisations serveur → services métier → Drizzle ORM → Neon PostgreSQL.
+Les images passent par un stockage objet et un mécanisme d'upload sécurisé. Les secrets restent exclusivement côté serveur.
 
-## 6. Flux de commande
-Le client ajoute au panier uniquement les produits actifs dont le prix USD est renseigné. Au checkout, le serveur relit les prix depuis la base, calcule les totaux et enregistre la demande. Aucun montant transmis par le navigateur n'est considéré comme fiable. Les frais de livraison restent à confirmer. Aucun paiement en ligne n'est exécuté à ce stade.
+## 5. Modèle de données cible
+Catalogue : brands, categories, products, product_variants, product_images, product_attributes, attribute_values.
+Inventaire : inventory_items, inventory_movements.
+Clients et commandes : customer_profiles, customer_addresses, carts, cart_items, orders, order_items, order_status_history, payments, deliveries.
+Administration : promotions, promotion_redemptions, rôles et permissions, audit_logs, store_settings, webhook_events.
 
-## 7. Base locale
-Configuration par défaut : SQLite dans database/database.sqlite. Option : MySQL local dans XAMPP, base ctrl_tech. Aucune donnée n'est envoyée vers un fournisseur cloud.
+Les tables doivent être créées et versionnées par migrations Drizzle. Les commandes conservent un instantané du prix, du nom et du SKU au moment de l'achat. Les montants utilisent un type monétaire exact.
 
-## 8. Données commerciales et conformité
-Aucun produit ou stock fictif n'est fourni. Les produits nouvellement créés sont non publiés par défaut. Les garanties, retours, prix, taux USD/CDF, frais de livraison et moyens de paiement doivent être validés avant l'ouverture commerciale.
+## 6. Environnements
+- Local : développement et données de test.
+- Development : intégration technique et base de développement Neon.
+- Preview : environnement isolé par déploiement.
+- Production : données commerciales réelles après validation.
 
-## 9. Vérifications
-- Tests : php artisan test.
-- Assets : npm run build.
-- Style PHP : vendor/bin/pint --test.
-- CI : GitHub Actions sur main et pull requests.
+Aucun secret de production ne doit être exposé dans le navigateur ou réutilisé dans Preview.
+
+## 7. État du Preview
+La branche `fix/report-aligned-react-vite` rétablit le socle frontend React/TypeScript/Vite et la direction artistique Precision Retail. Le catalogue visible est une démonstration et la sélection du panier reste locale.
+
+L'API métier, les migrations Neon/Drizzle, Neon Managed Better Auth, le stockage objet, le checkout, les commandes persistées, les rôles du back-office et les tests E2E restent à implémenter et valider avant de considérer le MVP comme complet.
+
+## 8. Règles commerciales
+Les prix, stocks, variantes, images officielles, garanties, frais et zones de livraison, retours et modes de paiement doivent être confirmés par CTRL-TECH. Les prix et disponibilités ne peuvent jamais être supposés par le frontend.
