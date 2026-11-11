@@ -1,5 +1,5 @@
 export type ProductCategory = "Smartphones" | "Ordinateurs" | "Tablettes" | "Accessoires" | "Réseaux" | "Périphériques" | "Gaming";
-export type Product = { id:string; slug:string; name:string; brand:string; category:ProductCategory; categorySlug:string; description:string; image:string; badge?:string; specs:string[]; featured?:boolean };
+export type Product = { id:string; slug:string; name:string; brand:string; category:ProductCategory; categorySlug:string; description:string; image:string; priceUsd:number; badge?:string; specs:string[]; featured?:boolean };
 export const categories: {name:string;slug:string;description:string;image:string}[] = [
  {name:"Smartphones",slug:"smartphones",description:"Téléphones Apple, Samsung et autres références mobiles.",image:"https://images.cdn.australia-southeast1.gcp.commercetools.com/48167b27-97fc-4af7-ae0f-92fd20b10d88/iPhone_16_Pro_Black_-9mwgqxkO.jpg"},
  {name:"Ordinateurs",slug:"ordinateurs",description:"PC portables pour les études, le travail et les usages professionnels.",image:"https://i.dell.com/is/image/DellContent/content/dam/images/products/laptops-and-2-in-1s/latitude/14-5450-non-touch/la5450nt-rgb-cnb-05000ff090-gy-campaign.psd?fmt=jpeg&hei=1280&wid=1280"},
@@ -29,7 +29,7 @@ const images = {
  storage:"https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=1000&q=85",
  charger:"https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1000&q=85"
 };
-export const products:Product[] = [
+const catalogProducts:Omit<Product,"priceUsd">[] = [
  {id:"P001",slug:"iphone-16-pro",name:"iPhone 16 Pro",brand:"Apple",category:"Smartphones",categorySlug:"smartphones",description:"Un smartphone premium doté d'un écran avancé et d'un système photo professionnel.",image:phone,badge:"Sélection",specs:["Écran Super Retina XDR 6,3 pouces","Puce A18 Pro","Système photo Pro","USB-C"],featured:true},
  {id:"P002",slug:"iphone-16",name:"iPhone 16",brand:"Apple",category:"Smartphones",categorySlug:"smartphones",description:"Une expérience iPhone complète avec commandes photo et performances de nouvelle génération.",image:images.phone2,specs:["Écran OLED 6,1 pouces","Puce A18","Caméra principale 48 MP","USB-C"],featured:true},
  {id:"P003",slug:"iphone-15",name:"iPhone 15",brand:"Apple",category:"Smartphones",categorySlug:"smartphones",description:"Dynamic Island, appareil photo haute résolution et connectique USB-C.",image:images.phone3,specs:["Écran OLED 6,1 pouces","Puce A16 Bionic","Caméra principale 48 MP","USB-C"]},
@@ -103,4 +103,81 @@ export const products:Product[] = [
  {id:"P070",slug:"logitech-g502-hero",name:"Logitech G502 HERO",brand:"Logitech G",category:"Gaming",categorySlug:"gaming",description:"Une souris gaming filaire avec commandes personnalisables.",image:"https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1000&q=85",specs:["Capteur gaming","Boutons programmables","Poids ajustable selon version","Connexion USB"]},
  {id:"P071",slug:"hyperx-cloud-iii",name:"HyperX Cloud III",brand:"HyperX",category:"Gaming",categorySlug:"gaming",description:"Un casque gaming conçu pour le jeu et les communications vocales.",image:"https://images.unsplash.com/photo-1599669454699-248893623440?auto=format&fit=crop&w=1000&q=85",specs:["Microphone détachable","Audio immersif","Connexion filaire selon version","Commandes intégrées"]}
 ];
+const pricesByProductId: Record<string, number> = {
+  P001: 1099,
+  P002: 799,
+  P003: 599,
+  P004: 449,
+  P005: 349,
+  P006: 799,
+  P007: 380,
+  P008: 300,
+  P009: 170,
+  P010: 950,
+  P011: 650,
+  P012: 999,
+  P013: 1599,
+  P014: 750,
+  P015: 1100,
+  P016: 700,
+  P017: 600,
+  P018: 250,
+  P019: 349,
+  P020: 599,
+  P021: 100,
+  P022: 45,
+  P023: 65,
+  P024: 25,
+  P025: 100,
+  P026: 80,
+  P027: 120,
+  P028: 180,
+  P029: 70,
+  P030: 15,
+  P031: 899,
+  P032: 850,
+  P033: 850,
+  P034: 999,
+  P035: 220,
+  P036: 499,
+  P037: 999,
+  P038: 350,
+  P039: 350,
+  P040: 180,
+  P041: 45,
+  P042: 10,
+  P043: 8,
+  P044: 8,
+  P045: 35,
+  P046: 40,
+  P047: 70,
+  P048: 160,
+  P049: 110,
+  P050: 90,
+  P051: 30,
+  P052: 70,
+  P053: 150,
+  P054: 10,
+  P055: 18,
+  P056: 110,
+  P057: 180,
+  P058: 260,
+  P059: 45,
+  P060: 180,
+  P061: 75,
+  P062: 1600,
+  P063: 1300,
+  P064: 900,
+  P065: 1200,
+  P066: 850,
+  P067: 550,
+  P068: 550,
+  P069: 350,
+  P070: 45,
+  P071: 90
+};
+export const products: Product[] = catalogProducts.map((product) => ({
+  ...product,
+  priceUsd: pricesByProductId[product.id]
+}));
 export const brands=[...new Set(products.map(p=>p.brand))].sort();
