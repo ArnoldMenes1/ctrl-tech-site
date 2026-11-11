@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder {
    ['Périphériques','peripheriques',5],['Impression & bureautique','impression-bureautique',6],
   ];
   foreach($categories as [$name,$slug,$order]) Category::updateOrCreate(['slug'=>$slug],['name'=>$name,'is_active'=>true,'sort_order'=>$order]);
-  foreach(['Samsung','Apple','Tecno','Infinix','itel','Lenovo','HP','Dell','Epson','Logitech','Generic'] as $brand) Brand::updateOrCreate(['slug'=>Str::slug($brand)],['name'=>$brand,'is_active'=>true]);
+  foreach(['Samsung','Apple','Tecno','Infinix','itel','Lenovo','HP','Dell','Epson','Canon','Brother','Acer','Logitech','Generic'] as $brand) Brand::updateOrCreate(['slug'=>Str::slug($brand)],['name'=>$brand,'is_active'=>true]);
   $sources=[
    'matik'=>['Matik Business — Lubumbashi','https://take.app/matikbusiness'],
    'telephone'=>['Telephone Lubumbashi — Avenue Mama Yemo','https://instasoko.africa/cd/fr/lubumbashi/s/lub-telephone'],
@@ -42,6 +42,15 @@ class DatabaseSeeder extends Seeder {
    ['lenovo-v15-g3-i5','Lenovo V15 G3 Core i5 / 8 Go / 512 Go SSD','Lenovo','laptops','ordinateurs',null,'https://funtech.pl/hpeciai/110e544883791aedaf101392f850625f/pol_pl_Biznesowy-Laptop-Lenovo-V15-G3-I5-1235U-15-6-8GB-512GB-SSD-Win-11-20760_1.jpg','Ordinateur portable professionnel : Core i5-1235U, 8 Go RAM et SSD 512 Go. Prix sur devis.','bcs'],
    ['hp-15-fd0005dx','HP 15-FD0005DX Core i5 / 8 Go / 512 Go SSD','HP','laptops','ordinateurs',null,null,'Ordinateur portable HP avec Core i5-1235U, 8 Go RAM et SSD 512 Go. Prix sur devis.','bcs'],
    ['epson-ecotank-l3250','Epson EcoTank L3250','Epson','printers','impression-bureautique',null,null,'Imprimante multifonction à réservoir d’encre référencée dans le catalogue BCS-IT. Prix sur devis.','bcs'],
+   ['tecno-camon-50','Tecno Camon 50 8 Go / 256 Go','Tecno','tecno-camon-series','telephones-tablettes',326,'https://d13pvy8xd75yde.cloudfront.net/camon/CN5-%E8%8E%AB%E5%A5%88%E7%B4%AB.png','Écran AMOLED 1,5K 144 Hz, caméra Sony 50 MP OIS et batterie 6 500 mAh.','telephone'],
+   ['tecno-spark-40-pro-plus','Tecno Spark 40 Pro+ 8 Go / 256 Go','Tecno','tecno-spark-series','telephones-tablettes',252,null,'Smartphone Tecno Spark 40 Pro+ 8 Go / 256 Go listé par Telephone Lubumbashi.','telephone'],
+   ['tecno-pop-20-4-64','Tecno Pop 20 4 Go / 64 Go','Tecno','tecno-pop-series','telephones-tablettes',132,null,'Smartphone Tecno Pop 20 4 Go / 64 Go listé par Telephone Lubumbashi.','telephone'],
+   ['infinix-hot-60i-8-256','Infinix Hot 60i 8 Go / 256 Go','Infinix','infinix-hot-series','telephones-tablettes',189,'https://sumeks.disway.id/upload/f07cc498c3f1eebb8c1915dafc9d0d3d.jpg','Smartphone Infinix Hot 60i 8 Go / 256 Go listé par Telephone Lubumbashi.','telephone'],
+   ['samsung-tab-a11-plus-8-256','Samsung Galaxy Tab A11+ 8 Go / 256 Go','Samsung','galaxy-tab-series','telephones-tablettes',399,'https://cdn.electronyat.qa/_next/image?q=90&url=https%3A%2F%2Fbackend.electronyat.qa%2Fmedia%2Fcatalog%2Fproduct%2Fu%2Fn%2Funtitled_design_-_2025-12-09t170439.489_1.png&w=576','Tablette Samsung Galaxy Tab A11+ 11 pouces 5G, 8 Go de RAM et 256 Go.','telephone'],
+   ['lenovo-thinkbook-16-g6','Lenovo ThinkBook 16 G6 Core i7 / 16 Go / 512 Go SSD','Lenovo','thinkbook','ordinateurs',null,'https://www.dateks.lv/images/pic/1200/1200/859/1758.jpg','Ordinateur professionnel Lenovo ThinkBook 16 G6, Core i7, 16 Go RAM et SSD 512 Go. Prix sur devis.','bcs'],
+   ['hp-probook-440-g11','HP ProBook 440 G11 8 Go / 512 Go SSD','HP','probook','ordinateurs',null,'https://mx-media.hptiendaenlinea.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/A/2/A24Z3LT-1_T1746824764.png','Ordinateur portable professionnel HP ProBook 440 G11, 14 pouces et SSD 512 Go. Prix sur devis.','bcs'],
+   ['canon-i-sensys-mf465dw-ii','Canon i-SENSYS MF465dw II','Canon','laser-printers','impression-bureautique',null,'https://i1.adis.ws/i/canon/7188C020_i-SENSYS-MF465dw-II_01?aspect=1%3A1&bg=rgb%28245%2C246%2C246%29&fmt=webp&qlt=100&sm=aspect&w=940','Imprimante laser multifonction monochrome A4, réseau et recto-verso. Prix sur devis.','bcs'],
+   ['brother-mfc-l2805dw','Brother MFC-L2805DW','Brother','laser-printers','impression-bureautique',null,'https://www.yv.com.hk/cdn/shop/files/mfcl2805dw_1_3b3b5d72-4d1a-43dd-a1ef-af52ede46357.jpg?v=1736752735&width=1200','Imprimante laser multifonction monochrome avec Wi-Fi, scanner et recto-verso. Prix sur devis.','bcs'],
   ];
   foreach($items as $index=>$item) {
    [$slug,$name,$brand,$family,$categorySlug,$price,$image,$description,$sourceKey]=$item;
