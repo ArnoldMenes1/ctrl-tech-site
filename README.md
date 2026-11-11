@@ -20,7 +20,7 @@ Application e-commerce Laravel 13 / PHP classique pour CTRL-Tech, avec catalogue
 8. Exécuter npm run build, puis php artisan serve.
 
 ## Catalogue local
-Le catalogue de démonstration contient 22 références issues de catalogues publics de vendeurs présents à Lubumbashi : Matik Business, Telephone Lubumbashi, BCS-IT, PS STORE PRO et Forum Electronics. Les tarifs affichés sont des prix repères publics relevés chez des vendeurs tiers, pas des prix de vente CTRL-Tech. Les stocks sont volontairement à zéro et les prix non confirmés : un administrateur doit vérifier le prix, la disponibilité et les conditions avant d'activer l'achat en ligne.
+Le catalogue de démonstration contient 31 références issues de catalogues publics de vendeurs présents à Lubumbashi : Matik Business, Telephone Lubumbashi, BCS-IT, PS STORE PRO et Forum Electronics. Les tarifs affichés sont des prix repères publics relevés chez des vendeurs tiers, pas des prix de vente CTRL-Tech. Les stocks sont volontairement à zéro et les prix non confirmés : un administrateur doit vérifier le prix, la disponibilité et les conditions avant d'activer l'achat en ligne.
 
 Les visuels sont chargés depuis les sites éditeurs ou vendeurs. Les liens externes et les droits d'utilisation commerciale doivent être vérifiés avant la mise en production commerciale.
 
