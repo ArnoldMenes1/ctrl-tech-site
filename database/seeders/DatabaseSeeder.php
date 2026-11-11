@@ -51,6 +51,18 @@ class DatabaseSeeder extends Seeder {
    ['hp-probook-440-g11','HP ProBook 440 G11 8 Go / 512 Go SSD','HP','probook','ordinateurs',null,'https://mx-media.hptiendaenlinea.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/A/2/A24Z3LT-1_T1746824764.png','Ordinateur portable professionnel HP ProBook 440 G11, 14 pouces et SSD 512 Go. Prix sur devis.','bcs'],
    ['canon-i-sensys-mf465dw-ii','Canon i-SENSYS MF465dw II','Canon','laser-printers','impression-bureautique',null,'https://i1.adis.ws/i/canon/7188C020_i-SENSYS-MF465dw-II_01?aspect=1%3A1&bg=rgb%28245%2C246%2C246%29&fmt=webp&qlt=100&sm=aspect&w=940','Imprimante laser multifonction monochrome A4, réseau et recto-verso. Prix sur devis.','bcs'],
    ['brother-mfc-l2805dw','Brother MFC-L2805DW','Brother','laser-printers','impression-bureautique',null,'https://www.yv.com.hk/cdn/shop/files/mfcl2805dw_1_3b3b5d72-4d1a-43dd-a1ef-af52ede46357.jpg?v=1736752735&width=1200','Imprimante laser multifonction monochrome avec Wi-Fi, scanner et recto-verso. Prix sur devis.','bcs'],
+
+   // iPhone — références ajoutées au catalogue, prix et stock à confirmer avant commercialisation.
+   ['apple-iphone-13','Apple iPhone 13','Apple','iphone','telephones-tablettes',null,null,'iPhone 13 — capacité, état (neuf/reconditionné) et disponibilité à confirmer.','telephone'],
+   ['apple-iphone-14','Apple iPhone 14','Apple','iphone','telephones-tablettes',null,null,'iPhone 14 — capacité, état (neuf/reconditionné) et disponibilité à confirmer.','telephone'],
+   ['apple-iphone-15','Apple iPhone 15','Apple','iphone','telephones-tablettes',null,null,'iPhone 15 — capacité, état (neuf/reconditionné) et disponibilité à confirmer.','telephone'],
+   ['apple-iphone-16','Apple iPhone 16','Apple','iphone','telephones-tablettes',null,null,'iPhone 16 — capacité, état (neuf/reconditionné) et disponibilité à confirmer.','telephone'],
+   // Ordinateurs supplémentaires — configurations et prix à valider avec le fournisseur.
+   ['dell-latitude-5450','Dell Latitude 5450','Dell','business-laptops','ordinateurs',null,null,'Ordinateur portable professionnel Dell Latitude 5450. Configuration exacte et disponibilité à confirmer. Prix sur devis.','bcs'],
+   ['dell-inspiron-15','Dell Inspiron 15','Dell','consumer-laptops','ordinateurs',null,null,'Ordinateur portable Dell Inspiron 15. Configuration exacte et disponibilité à confirmer. Prix sur devis.','bcs'],
+   ['lenovo-thinkpad-e14','Lenovo ThinkPad E14','Lenovo','business-laptops','ordinateurs',null,null,'Ordinateur portable professionnel Lenovo ThinkPad E14. Configuration exacte et disponibilité à confirmer. Prix sur devis.','bcs'],
+   ['acer-aspire-5','Acer Aspire 5','Acer','consumer-laptops','ordinateurs',null,null,'Ordinateur portable Acer Aspire 5. Configuration exacte et disponibilité à confirmer. Prix sur devis.','bcs'],
+
   ];
   foreach($items as $index=>$item) {
    [$slug,$name,$brand,$family,$categorySlug,$price,$image,$description,$sourceKey]=$item;
