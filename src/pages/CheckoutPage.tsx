@@ -55,7 +55,17 @@ export default function CheckoutPage({ cart, onClear }: { cart: Product[]; onCle
           items: items.map(item => ({ productId: item.product.id, quantity: item.quantity })),
         }),
       });
-      const data = await response.json();
+      const responseText = await response.text();
+      let data: { error?: string; order?: { reference?: string } } = {};
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        throw new Error(
+          response.ok
+            ? "Le serveur a renvoyé une réponse invalide."
+            : `Le serveur rencontre une erreur (HTTP ${response.status}). Réessayez dans quelques instants.`
+        );
+      }
       if (!response.ok) throw new Error(data.error || "Impossible d'enregistrer la commande.");
       onClear();
       navigate("/compte?commande=" + encodeURIComponent(data.order.reference), { replace: true });
