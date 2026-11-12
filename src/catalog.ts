@@ -1,4 +1,4 @@
-export type ProductCategory = "Smartphones" | "Ordinateurs" | "Tablettes" | "Accessoires" | "Réseaux" | "Périphériques" | "Gaming";
+export type ProductCategory = string;
 export type Product = { id:string; slug:string; name:string; brand:string; category:ProductCategory; categorySlug:string; description:string; image:string; priceUsd:number; badge?:string; specs:string[]; featured?:boolean };
 export const categories: {name:string;slug:string;description:string;image:string}[] = [
  {name:"Smartphones",slug:"smartphones",description:"Téléphones Apple, Samsung et autres références mobiles.",image:"https://images.cdn.australia-southeast1.gcp.commercetools.com/48167b27-97fc-4af7-ae0f-92fd20b10d88/iPhone_16_Pro_Black_-9mwgqxkO.jpg"},
@@ -181,3 +181,14 @@ export const products: Product[] = catalogProducts.map((product) => ({
   priceUsd: pricesByProductId[product.id]
 }));
 export const brands=[...new Set(products.map(p=>p.brand))].sort();
+
+
+export function replaceCatalogData(
+  nextProducts: Product[],
+  nextCategories: { name: string; slug: string; description: string; image: string }[],
+  nextBrands: string[]
+) {
+  products.splice(0, products.length, ...nextProducts);
+  categories.splice(0, categories.length, ...nextCategories);
+  brands.splice(0, brands.length, ...nextBrands);
+}
