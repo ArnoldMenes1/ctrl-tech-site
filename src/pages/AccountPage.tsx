@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, LogOut, PackageCheck, UserRound } from "lucide-react";
 import { authClient, getAuthToken } from "../lib/auth";
-import { useStore } from "@neondatabase/auth/react";
+import { useAuthSession } from "../lib/useAuthSession";
 import { formatUsd } from "../lib/pricing";
 
 type Order = {
@@ -17,7 +17,7 @@ type Order = {
 };
 
 export default function AccountPage() {
-  const { data: session, isPending } = useStore(authClient.useSession);
+  const { session, isPending, refresh } = useAuthSession();
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
@@ -72,6 +72,7 @@ export default function AccountPage() {
         setError(result.error.message || "Vérifiez vos informations puis réessayez.");
         return;
       }
+      await refresh();
       navigate(redirectTo, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue.");
