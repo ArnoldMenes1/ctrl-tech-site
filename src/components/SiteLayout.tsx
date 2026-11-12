@@ -3,8 +3,9 @@ import type {FormEvent} from "react";
 import {Link,NavLink,useLocation,useNavigate} from "react-router-dom";
 import {Search,ShoppingBag,Menu,X,ArrowUpRight,UserRound} from "lucide-react";
 import {authClient} from "../lib/auth";
+import {useStore} from "@neondatabase/auth/react";
 export default function SiteLayout({children,cartCount}:{children:React.ReactNode;cartCount:number}){
- const [mobile,setMobile]=useState(false); const [query,setQuery]=useState(""); const nav=useNavigate(); const loc=useLocation(); const {data:session}=authClient.useSession();
+ const [mobile,setMobile]=useState(false); const [query,setQuery]=useState(""); const nav=useNavigate(); const loc=useLocation(); const {data:session}=useStore(authClient.useSession);
  const submit=(e:FormEvent)=>{e.preventDefault();nav("/catalogue?q="+encodeURIComponent(query));setMobile(false)};
  const linkClass=({isActive}:{isActive:boolean})=>isActive?"nav-link active":"nav-link";
  return <div className="site-shell"><div className="topline"><span>CTRL-TECH / LUBUMBASHI</span><span>ÉQUIPEMENTS • CONSEIL • TECHNOLOGIE</span><span>PRIX INDICATIFS • DISPONIBILITÉ À CONFIRMER</span></div>
