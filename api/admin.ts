@@ -290,11 +290,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!userId) return sendError(res, 400, "Identifiant client manquant.");
       if (userId === actor.sub) return sendError(res, 400, "Vous ne pouvez pas suspendre votre propre compte.");
       const updated = await sql`
-        UPDATE neon_auth."user" SET banned = ${banned}, banReason = ${banned ? (reason || "Suspendu par un administrateur") : null},
-          banExpires = NULL, "updatedAt" = now()
-        WHERE id = ${userId}::uuid RETURNING id
+        SELECT storefront.set_customer_banned(${userId}::uuid, ${banned}, ${reason}) AS updated
       `;
-      if (!updated.length) return sendError(res, 404, "Client introuvable.");
+      if (!updated[0]?.updated) return sendError(res, 404, "Client introuvable.");
       await audit(sql, actor, banned ? "customer.suspended" : "customer.reactivated", "customer", userId, { reason });
       return res.status(200).json({ message: banned ? "Compte suspendu." : "Compte réactivé." });
     }
