@@ -9,15 +9,14 @@ import {CartPage,ComparePage} from "./pages/CartComparePages";
 import {AboutPage,ContactPage,ShippingPage,PrivacyPage,TermsPage} from "./pages/InfoPages";
 import AccountPage from "./pages/AccountPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import {authClient} from "./lib/auth";
-import {useStore} from "@neondatabase/auth/react";
+import {useAuthSession} from "./lib/useAuthSession";
 import {type Product,products} from "./catalog";
 
 function RequireAuth({children}:{children:ReactNode}){
- const {data,isPending}=useStore(authClient.useSession);
+ const {session,isPending}=useAuthSession();
  const location=useLocation();
  if(isPending)return <div className="account-loading">Vérification de votre session…</div>;
- if(!data?.user)return <Navigate to={"/compte?redirect="+encodeURIComponent(location.pathname)} replace/>;
+ if(!session?.user)return <Navigate to={"/compte?redirect="+encodeURIComponent(location.pathname)} replace/>;
  return <>{children}</>;
 }
 
