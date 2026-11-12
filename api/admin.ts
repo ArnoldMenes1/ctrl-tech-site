@@ -3,7 +3,7 @@ import { neon } from "@neondatabase/serverless";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 
 type AdminIdentity = { sub: string; email: string; name?: string };
-type Sql = ReturnType<typeof neon>;
+type Sql = any;
 
 function getSql() {
   if (!process.env.DB_URL) throw new Error("DB_NOT_CONFIGURED");
