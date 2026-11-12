@@ -110,7 +110,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     for (const [productId, quantity] of quantities) {
       const product = products.find((entry) => entry.id === productId);
       const unitPrice = databasePrices.get(productId);
-      if (!product || !Number.isFinite(unitPrice) || quantity > 20) {
+      if (!product || typeof unitPrice !== "number" || !Number.isFinite(unitPrice) || quantity > 20) {
         return sendError(res, 400, "Une référence du panier n'est plus disponible.");
       }
       pricedItems.push({
