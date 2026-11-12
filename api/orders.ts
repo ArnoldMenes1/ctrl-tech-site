@@ -44,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const sql = getSql();
 
     if (req.method === "GET") {
-      const orders = await sql\`
+      const orders = await sql`
         SELECT
           o.id, o.reference, o.status, o.payment_status, o.payment_method,
           o.subtotal_usd, o.total_usd, o.total_cdf, o.created_at,
@@ -61,11 +61,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ) AS items
         FROM storefront.orders o
         LEFT JOIN storefront.order_items i ON i.order_id = o.id
-        WHERE o.auth_user_id = \${user.sub}
+        WHERE o.auth_user_id = ${user.sub}
         GROUP BY o.id
         ORDER BY o.created_at DESC
         LIMIT 30
-      \`;
+      `;
       return res.status(200).json({ orders });
     }
 
@@ -129,7 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const totalCdf = Math.round((subtotal * exchangeRate) / 100) * 100;
     const reference = "CT-" + Date.now().toString(36).toUpperCase() + "-" + randomUUID().slice(0, 6).toUpperCase();
 
-    const created = await sql\`
+    const created = await sql`
       WITH new_order AS (
         INSERT INTO storefront.orders (
           reference, auth_user_id, customer_name, customer_email,
@@ -138,9 +138,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           status, payment_method, payment_status
         )
         VALUES (
-          \${reference}, \${user.sub}, \${customerName}, \${user.email},
-          \${phone}, \${address}, \${area}, \${notes || null},
-          'USD', \${exchangeRate}, \${subtotal}, \${subtotal}, \${totalCdf},
+          ${reference}, ${user.sub}, ${customerName}, ${user.email},
+          ${phone}, ${address}, ${area}, ${notes || null},
+          'USD', ${exchangeRate}, ${subtotal}, ${subtotal}, ${totalCdf},
           'pending_confirmation', 'cash_in_person', 'unpaid'
         )
         RETURNING id, reference
@@ -154,14 +154,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           new_order.id, item.product_id, item.product_slug, item.product_name,
           item.brand, item.quantity, item.unit_price_usd, item.line_total_usd
         FROM new_order
-        CROSS JOIN jsonb_to_recordset(\${JSON.stringify(pricedItems)}::jsonb) AS item(
+        CROSS JOIN jsonb_to_recordset(${JSON.stringify(pricedItems)}::jsonb) AS item(
           product_id text, product_slug text, product_name text, brand text,
           quantity integer, unit_price_usd numeric, line_total_usd numeric
         )
         RETURNING id
       )
       SELECT id, reference FROM new_order
-    \`;
+    `;
 
     return res.status(201).json({
       order: {
