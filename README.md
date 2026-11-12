@@ -35,3 +35,11 @@ Chaque route possède son propre fichier HTML. Les pages partagent `assets/css/p
 ## Limites
 
 Les pages et leurs interfaces sont structurées. Les comptes, produits réels, stocks, commandes, paiements, formulaires et droits d'administration nécessitent un backend et une base de données. Les actions non connectées sont présentées comme prototypes.
+
+
+## Base de données et modèle Merise
+
+- [Modèle de données — entités, classes et relations (vue ER/Merise)](docs/modele-donnees-ctrl-tech.md)
+- [Structure SQL complète des schémas métier](database/schema-ctrl-tech.sql)
+
+Ces documents sont des instantanés de la structure Neon observée le 12 novembre 2026. Le modèle distingue le schéma `storefront` actuellement utilisé des anciennes tables du schéma `public`.
