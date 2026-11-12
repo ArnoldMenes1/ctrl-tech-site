@@ -55,7 +55,7 @@ function validImageUrl(value: unknown) {
   if (typeof value !== "string" || !value.trim()) return false;
   try {
     const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:";
+    return url.protocol === "https:";
   } catch { return false; }
 }
 
