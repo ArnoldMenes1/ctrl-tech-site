@@ -2,7 +2,6 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { neon } from "@neondatabase/serverless";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import { randomUUID } from "node:crypto";
-import { products } from "./catalog.js";
 
 type AuthPayload = { sub: string; email: string; name?: string };
 
@@ -94,23 +93,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const requestedIds = [...quantities.keys()].map((product_id) => ({ product_id }));
-    const priceRows = await sql`
-      SELECT product_id, price_usd
-      FROM storefront.catalog_prices
-      WHERE product_id IN (
+    const catalogRows = await sql`
+      SELECT p.product_id, p.slug, p.name, p.brand, pr.price_usd
+      FROM storefront.catalog_products p
+      INNER JOIN storefront.catalog_prices pr ON pr.product_id = p.product_id
+      WHERE p.product_id IN (
         SELECT item.product_id
         FROM jsonb_to_recordset(${JSON.stringify(requestedIds)}::jsonb) AS item(product_id text)
       )
+      AND p.is_active = true
     `;
-    const databasePrices = new Map(
-      priceRows.map((row) => [String(row.product_id), Number(row.price_usd)])
+    const databaseProducts = new Map(
+      catalogRows.map((row) => [String(row.product_id), {
+        id: String(row.product_id),
+        slug: String(row.slug),
+        name: String(row.name),
+        brand: String(row.brand),
+        price: Number(row.price_usd),
+      }])
     );
 
     const pricedItems = [];
     for (const [productId, quantity] of quantities) {
-      const product = products.find((entry) => entry.id === productId);
-      const unitPrice = databasePrices.get(productId);
-      if (!product || typeof unitPrice !== "number" || !Number.isFinite(unitPrice) || quantity > 20) {
+      const product = databaseProducts.get(productId);
+      const unitPrice = product?.price;
+      if (!product || typeof unitPrice !== "number" || !Number.isFinite(unitPrice) || unitPrice <= 0 || quantity > 20) {
         return sendError(res, 400, "Une référence du panier n'est plus disponible.");
       }
       pricedItems.push({
