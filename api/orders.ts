@@ -41,6 +41,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const user = await requireUser(req);
     const sql = getSql();
+    const accountRows = await sql`
+      SELECT COALESCE(banned, false) AS banned
+      FROM neon_auth."user"
+      WHERE id = ${user.sub}::uuid AND email = ${user.email}
+      LIMIT 1
+    `;
+    if (!accountRows.length) return sendError(res, 401, "Compte introuvable. Reconnectez-vous.");
+    if (accountRows[0].banned) return sendError(res, 403, "Ce compte est suspendu. Contactez le support CTRL-TECH.");
 
     if (req.method === "GET") {
       const orders = await sql`
