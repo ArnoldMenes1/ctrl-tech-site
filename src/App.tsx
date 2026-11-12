@@ -9,8 +9,9 @@ import {CartPage,ComparePage} from "./pages/CartComparePages";
 import {AboutPage,ContactPage,ShippingPage,PrivacyPage,TermsPage} from "./pages/InfoPages";
 import AccountPage from "./pages/AccountPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import AdminPage from "./pages/AdminPage";
 import {useAuthSession} from "./lib/useAuthSession";
-import {type Product,products} from "./catalog";
+import {type Product,products,replaceCatalogData} from "./catalog";
 
 function RequireAuth({children}:{children:ReactNode}){
  const {session,isPending}=useAuthSession();
@@ -28,14 +29,27 @@ function Store(){
   }catch{return []}
  });
  const [compare,setCompare]=useState<string[]>(()=>{try{return JSON.parse(localStorage.getItem("ctrltech-compare")||"[]")}catch{return []}});
+ const [catalogVersion,setCatalogVersion]=useState(0);
+ useEffect(()=>{
+  let active=true;
+  void fetch("/api/storefront").then(async response=>{
+   if(!response.ok)return;
+   const data=await response.json();
+   if(!active||!Array.isArray(data.products)||!data.products.length)return;
+   replaceCatalogData(data.products as Product[],Array.isArray(data.categories)?data.categories:[],Array.isArray(data.brands)?data.brands:[]);
+   setCart(current=>current.map(item=>products.find(product=>product.id===item.id)||item));
+   setCatalogVersion(version=>version+1);
+  }).catch(()=>{});
+  return()=>{active=false};
+ },[]);
  useEffect(()=>{localStorage.setItem("ctrltech-cart",JSON.stringify(cart))},[cart]);
  useEffect(()=>{localStorage.setItem("ctrltech-compare",JSON.stringify(compare))},[compare]);
  const add=(p:Product)=>setCart(a=>[...a,p]);
  const remove=(id:string)=>setCart(a=>{const i=a.findIndex(p=>p.id===id);return i<0?a:a.filter((_,n)=>n!==i)});
  const clear=()=>setCart([]);
  const toggleCompare=(p:Product)=>setCompare(a=>a.includes(p.id)?a.filter(x=>x!==p.id):a.length>=3?a:[...a,p.id]);
- const compared=useMemo(()=>compare.map(id=>products.find(p=>p.id===id)).filter((p):p is Product=>!!p),[compare]);
- return <SiteLayout cartCount={cart.length}><Routes>
+ const compared=useMemo(()=>compare.map(id=>products.find(p=>p.id===id)).filter((p):p is Product=>!!p),[compare,catalogVersion]);
+ return <div data-catalog-version={catalogVersion}><SiteLayout cartCount={cart.length}><Routes>
   <Route path="/" element={<HomePage onAdd={add} onCompare={toggleCompare} compared={compare}/>}/>
   <Route path="/catalogue" element={<CatalogPage onAdd={add} onCompare={toggleCompare} compared={compare}/>}/>
   <Route path="/categories" element={<CategoriesPage/>}/>
@@ -53,6 +67,14 @@ function Store(){
   <Route path="/confidentialite" element={<PrivacyPage/>}/>
   <Route path="/conditions-generales" element={<TermsPage/>}/>
   <Route path="*" element={<section className="empty-state"><h1>Page introuvable</h1><p>La page demandée n'existe pas.</p><a href="/catalogue">Retour au catalogue</a></section>}/>
- </Routes></SiteLayout>;
+ </Routes></SiteLayout></div>;
 }
-export default function App(){return <BrowserRouter><Store/></BrowserRouter>}
+function AppRouter(){
+ const isAdminHost=window.location.hostname==="ctrl-tech-admin.vercel.app";
+ if(isAdminHost)return <AdminPage/>;
+ return <Routes>
+  <Route path="/admin/*" element={<AdminPage/>}/>
+  <Route path="*" element={<Store/>}/>
+ </Routes>;
+}
+export default function App(){return <BrowserRouter><AppRouter/></BrowserRouter>}
