@@ -6,8 +6,8 @@ type AdminIdentity = { sub: string; email: string; name?: string };
 type Sql = any;
 
 function getSql() {
-  if (!process.env.DB_URL) throw new Error("DB_NOT_CONFIGURED");
-  return neon(process.env.DB_URL);
+  if (!process.env.ADMIN_DB_URL) throw new Error("ADMIN_DB_NOT_CONFIGURED");
+  return neon(process.env.ADMIN_DB_URL);
 }
 
 async function requireAdmin(req: VercelRequest, sql: Sql): Promise<AdminIdentity> {
@@ -305,7 +305,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (message === "AUTH_REQUIRED" || message === "INVALID_SESSION") return sendError(res, 401, "Connectez-vous pour accéder à cette ressource.");
     if (message === "ADMIN_REQUIRED") return sendError(res, 403, "Ce compte ne possède pas les droits administrateur.");
     if (message === "ACCOUNT_SUSPENDED") return sendError(res, 403, "Ce compte est suspendu.");
-    if (message === "AUTH_NOT_CONFIGURED" || message === "DB_NOT_CONFIGURED") return sendError(res, 503, "Le service d'administration n'est pas configuré.");
+    if (message === "AUTH_NOT_CONFIGURED" || message === "DB_NOT_CONFIGURED" || message === "ADMIN_DB_NOT_CONFIGURED") return sendError(res, 503, "Le service d'administration n'est pas configuré.");
     console.error("CTRL-TECH admin API:", error);
     return sendError(res, 500, "Impossible de traiter cette action pour le moment.");
   }
