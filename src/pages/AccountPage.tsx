@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, LogOut, PackageCheck, UserRound } from "lucide-react";
 import { authClient, getAuthToken } from "../lib/auth";
+import { useStore } from "@neondatabase/auth/react";
 import { formatUsd } from "../lib/pricing";
 
 type Order = {
@@ -16,7 +17,7 @@ type Order = {
 };
 
 export default function AccountPage() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session, isPending } = useStore(authClient.useSession);
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
