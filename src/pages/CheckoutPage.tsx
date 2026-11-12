@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Banknote, ShieldCheck } from "lucide-react";
 import type { Product } from "../catalog";
-import { authClient, getAuthToken } from "../lib/auth";
-import { useStore } from "@neondatabase/auth/react";
+import { getAuthToken } from "../lib/auth";
+import { useAuthSession } from "../lib/useAuthSession";
 import { formatCdf, formatUsd } from "../lib/pricing";
 
 export default function CheckoutPage({ cart, onClear }: { cart: Product[]; onClear: () => void }) {
-  const { data: session, isPending } = useStore(authClient.useSession);
+  const { session, isPending } = useAuthSession();
   const navigate = useNavigate();
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
