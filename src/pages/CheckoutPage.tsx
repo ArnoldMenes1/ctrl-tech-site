@@ -67,8 +67,10 @@ export default function CheckoutPage({ cart, onClear }: { cart: Product[]; onCle
         );
       }
       if (!response.ok) throw new Error(data.error || "Impossible d'enregistrer la commande.");
+      const orderReference = data.order?.reference;
+      if (!orderReference) throw new Error("La commande a été reçue, mais sa référence est absente. Vérifiez votre historique avant de réessayer.");
       onClear();
-      navigate("/compte?commande=" + encodeURIComponent(data.order.reference), { replace: true });
+      navigate("/compte?commande=" + encodeURIComponent(orderReference), { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue.");
     } finally {
