@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { Activity, ArrowLeft, ArrowUpRight, BadgeCheck, Boxes, ChartNoAxesCombined, CircleUserRound, ClipboardList, LayoutDashboard, LogOut, Package, Plus, RefreshCw, Save, ShieldCheck, Tags, Users, X } from "lucide-react";
+import "../admin.css";
+import { Activity, ArrowLeft, ArrowUpRight, Boxes, ChartNoAxesCombined, CircleUserRound, ClipboardList, LayoutDashboard, LogOut, Package, Plus, RefreshCw, Save, ShieldCheck, Tags, Users, X } from "lucide-react";
 import { authClient, getAuthToken } from "../lib/auth";
 import { useAuthSession } from "../lib/useAuthSession";
 import { formatUsd } from "../lib/pricing";
