@@ -10,6 +10,16 @@ Le storefront est publié avec **GitHub Pages** via GitHub Actions. Une fois Git
 
 Le workflow `.github/workflows/pages.yml` prépare les chemins d'assets et les routes de détail pour l'hébergement statique avant publication.
 
+## Catalogue actuel
+
+Export des produits actifs servis par l'API publique de la boutique au 12 novembre 2026.
+
+- **Fichier CSV :** [`docs/catalogue-produits-actuel.csv`](docs/catalogue-produits-actuel.csv)
+- **Produits actifs au moment de l'export :** 71
+- **Champs :** identifiant, nom, marque, catégorie, slug, prix USD, mise en avant, badge, description, image et caractéristiques.
+- **Source :** `https://ctrl-tech-store.vercel.app/api/catalog`
+- **Note :** cet export est un instantané ; il faut le régénérer après une modification du catalogue en ligne.
+
 ## Pages publiques
 
 Accueil, catalogue, catégories et détails, marques et détails, fiche produit, comparateur (3 produits maximum), panier, connexion, inscription, récupération et réinitialisation du mot de passe, validation et confirmation de commande, compte client, commandes et détail, suivi, profil, à propos, contact, livraison, garanties et retours, FAQ, conditions générales, confidentialité, 404 et erreur.
