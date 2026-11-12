@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { neon } from "@neondatabase/serverless";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import { randomUUID } from "node:crypto";
-import { products } from "../src/catalog";
+import { products } from "../src/catalog.ts";
 
 type AuthPayload = { sub: string; email: string; name?: string };
 
