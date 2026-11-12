@@ -39,6 +39,7 @@ Les pages et leurs interfaces sont structurées. Les comptes, produits réels, s
 
 ## Base de données et modèle Merise
 
+- [Diagramme visuel SVG — modèle entités-associations Merise](docs/modele-donnees-ctrl-tech.svg)
 - [Modèle de données — entités, classes et relations (vue ER/Merise)](docs/modele-donnees-ctrl-tech.md)
 - [Structure SQL complète des schémas métier](database/schema-ctrl-tech.sql)
 
